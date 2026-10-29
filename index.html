@@ -545,7 +545,7 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
     mama: { name: 'Mamá', initials: 'M', bg: '#b5527a', status: 'en línea',
       reply: ['Gracias por contarme, no estás en problemas.', 'No le mandes nada. Mañana lo vemos con calma y guardamos las capturas.'] },
     hermana: { name: 'Hermana', initials: 'H', bg: '#8e5bb5', status: 'en línea',
-      reply: ['Gracias por contarme.', 'No le mandes nada ni aceptes su plata. Mañana lo vemos juntas.'] },
+      reply: ['Gracias por contarme.', 'No le mandes nada ni aceptes nada de esa persona. Mañana lo vemos juntas.'] },
     kim: { name: 'Kim', initials: 'K', bg: '#3f7fbf', status: 'en línea',
       reply: ['Oye, eso no me cuadra.', 'No le pases nada, ¿ya? Si quieres le contamos a alguien.'] },
     chat100: { name: 'Chat 100', initials: '100', bg: '#155240', status: 'Atiende 24 horas · gratis', help: true,
@@ -566,7 +566,7 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
     ['Quiero denunciar. ¿Qué necesito?', ['Guarda lo que tengas: capturas del chat y del perfil, el número o la cuenta, y las fechas.', 'Las amenazas, las represalias y las «deudas» inventadas también se denuncian.', 'Línea 1818: denuncia anónima de trata. Línea 100: llamar, 24 horas. Chat 100: escribir, 24 horas. Puedes hacerlo con alguien de confianza.']],
     ['Soy familia de alguien a quien le pasó', ['Gracias por buscar cómo ayudar.', 'Escucha sin juzgar y sin castigar. Quitar el celular hace que la próxima vez no te lo cuenten.', 'Acompaña a guardar pruebas y a buscar ayuda. Una supervisión respetuosa cuida más que el castigo.']],
     ['No sé cómo contarlo', ['1. Elige a quién: alguien de confianza o una línea.', '2. Empieza por lo que pasó: «Me escribieron esto y no sé qué hacer».', '3. Muestra las capturas: ayudan a que te crean y a denunciar.', '4. Recuerda: contar que cortaste no es confesar una falta.']],
-    ['¿Quién puede ser el gancho?', ['No siempre es una cuenta desconocida. También puede ser una falsa empresa, una amistad que vuelve con celular y ropa nuevos, alguien que recluta a otras personas jóvenes, una pareja o alguien que te enamora en línea, un familiar, o alguien con acceso a menores, como docentes, entrenadores o streamers.', 'Muchas veces usan su perfil real. Por eso conviene tener un plan B: alguien de tu familia, una amistad mayor o Chat 100.']],
+    ['¿Quién puede ser el gancho?', ['No siempre es una cuenta desconocida. También puede ser una falsa empresa, una amistad que vuelve con celular y ropa nuevos, alguien que recluta a otras personas jóvenes, una pareja o alguien que te enamora en línea, un familiar, o alguien con acceso a menores, como docentes, entrenadores o streamers.', 'Muchas veces usan su perfil real. Por eso conviene tener un plan B: otra persona de tu familia, una amistad mayor o Chat 100.']],
     ['Quiero ayudar a alguien', ['Puedes acercarte sin juzgar: «Vi esta oferta y me pareció rara. ¿La revisamos?»', 'Comentar «cuidado» en un anuncio o reportar la cuenta protege a otras personas.']]
   ];
 
@@ -672,7 +672,7 @@ SIM.addCase({
   preview: 'Hola, te vi en las historias de…',
   profile: ['jx_music07', '0 publicaciones · 38 seguidores · 512 seguidos', 'Cuenta creada hace 5 días', 'Foto de perfil de anime'],
   lastSeen: 'Activo hace 1 min',
-  phone: '+51 961 204 877',
+  phone: '+51 900 000 877',
   tell: {
     kim: ['No sé quién es esa cuenta. No sigo a nadie así.', 'No le pases tu número.'],
     mama: ['Gracias por contarme. Esto no es tu culpa.', 'Guarda las capturas y no le respondas más.']
@@ -727,9 +727,9 @@ SIM.addCase({
  * with a one-way ticket. Ported from Chat v4 scenario `conocido`. */
 SIM.addCase({
   id: 'conocido', app: 'whatsapp', order: 3,
-  name: '+51 952 318 406', push: 'Sam', initials: 'SA', bg: '#f26529', time: '16:05',
+  name: '+51 900 000 406', push: 'Sam', initials: 'SA', bg: '#f26529', time: '16:05',
   preview: 'Hola, soy Sam, del barrio…',
-  profile: ['~Sam', '+51 952 318 406', 'No está en tus contactos', 'Info: Chambeando duro'],
+  profile: ['~Sam', '+51 900 000 406', 'No está en tus contactos', 'Info: Chambeando duro'],
   lastSeen: 'últ. vez hoy a las 16:01',
   tell: {
     mama: ['¿Sam? Nadie sabe bien a qué se dedica.', 'No aceptes ningún pasaje sin que lo veamos con calma.'],
@@ -762,7 +762,7 @@ SIM.addCase({
     n2b: { m: 'B', msgs: [], opts: [
       { say: 'bueno, voy igual', a: ['sigue'], m: 'BC', fb: ['alert', 'Te aísla', 'Ir sin compañía, sin dinero propio y sin pasaje de vuelta te deja sin forma de volver. Comparte siempre adónde vas.', 'aisla'], next: 'n3' },
       { say: 'entonces no voy', a: ['corta'], m: 'BC', fb: ['good', 'Tus condiciones te protegieron', 'Cuando una oferta no acepta tus condiciones, cortar es una buena salida.'], end: 1 },
-      { t: 'Pasarle a mamá el número de Sam', do: [{ tell: 'mama', text: 'Ma, Sam me consiguió chamba en otra ciudad. Su número es +51 952 318 406. Me recogen en el terminal.', reply: ['¿Y la vuelta? ¿Y la dirección?', 'Así no vas. Mañana hablamos con calma.'] }], m: 'BC', fb: ['good', 'Alguien sabe adónde vas', 'Con esos datos, otra persona puede ayudarte a revisar y a buscarte si hace falta.'], end: 1 }] },
+      { t: 'Pasarle a mamá el número de Sam', do: [{ tell: 'mama', text: 'Ma, Sam me consiguió chamba en otra ciudad. Su número es +51 900 000 406. Me recogen en el terminal.', reply: ['¿Y la vuelta? ¿Y la dirección?', 'Así no vas. Mañana hablamos con calma.'] }], m: 'BC', fb: ['good', 'Alguien sabe adónde vas', 'Con esos datos, otra persona puede ayudarte a revisar y a buscarte si hace falta.'], end: 1 }] },
     n3: { m: 'C', pausa: 1, msgs: [
       { sys: 'Una semana después, en otra ciudad' },
       'Ya llegaste. La persona encargada te está esperando.',
@@ -787,7 +787,7 @@ SIM.addCase({
   preview: 'buena partida jaja, eres buena',
   profile: ['Kevin_FF · Nivel 52', 'Región Sudamérica', 'Se unió hace 2 meses', 'Dice tener 17 años'],
   lastSeen: 'en línea',
-  phone: '+51 987 450 112',
+  phone: '+51 900 000 112',
   tell: {
     kim: ['¿Diamantes y ya quiere tu número? Eso es lo que dicen en las charlas.', 'No le pases nada.'],
     mama: ['Gracias por contarme, no estás en problemas.', 'Si te pide fotos en secreto, no es un chico de tu edad jugando. Lo vamos a reportar.']
@@ -921,14 +921,14 @@ SIM.addCase({
 ;
 /* Case «Compra y venta»: a «fichera» offer for a bar in a mining town, by
  * WhatsApp from someone in a local buy-and-sell group, with a Yape advance,
- * a ticket «que se descuenta» and the DNI kept. Composite of the bar-route
- * journeys in the field grid (Madre de Dios, 2026-10-28); new text, needs
- * team review. */
+ * a ticket «que se descuenta» and the DNI asked on arrival. Composite of the
+ * bar-route journeys in the field grid (Madre de Dios, 2026-10-28); new text,
+ * needs team review. */
 SIM.addCase({
   id: 'fichas', app: 'whatsapp', order: 6,
-  name: '+51 984 207 553', push: 'Compra y venta Puerto', initials: 'CV', bg: '#2e7d4f', time: '22:40',
+  name: '+51 900 000 553', push: 'Compra y venta Puerto', initials: 'CV', bg: '#2e7d4f', time: '22:40',
   preview: 'Hola linda, te vi en el grupo…',
-  profile: ['~Lucho', '+51 984 207 553', 'No está en tus contactos', 'Admin · Compra y venta Puerto'],
+  profile: ['~Lucho', '+51 900 000 553', 'No está en tus contactos', 'Admin · Compra y venta Puerto'],
   lastSeen: 'en línea',
   tell: {
     mama: ['¿Fichas? Eso es tomar con los clientes, hija.', 'No vas a ningún lado. Devuélvele su plata y lo bloqueamos.'],
@@ -943,21 +943,23 @@ SIM.addCase({
       ['Una amiga tiene un local en Mazuko y busca chicas para atender', 'norevisa'],
       ['S/ 200 por noche más fichas, con cuarto y comida', 'promete'],
       ['No piden experiencia ni DNI', 'norevisa']], opts: [
-      { say: 'qué son fichas?', a: ['pregunta'], m: 'AB', fb: ['good', 'Pregunta qué es el trabajo', '«Atender», «acompañar» o «fichas» pueden esconder tomar con clientes. Fíjate en cómo te lo explican.'], reply: [['Acompañas a los clientes en la mesa, conversas', 'norevisa'], ['Cada trago que te invitan es una ficha y te llevas tu parte', 'promete']], next: 'n2' },
+      { say: 'qué son fichas?', a: ['pregunta'], m: 'AB', fb: ['good', 'Pregunta qué es el trabajo', '«Fichas» suele ser la parte que te pagan por cada trago que un cliente te invita: es tomar con clientes. «Atender» o «acompañar» pueden esconder lo mismo.'], reply: [['Atiendes a los clientes en la mesa, conversas', 'norevisa']], next: 'n2' },
       { say: 'me interesa, necesito la plata', a: ['sigue'], m: 'AB', fb: ['note', 'Mucho dinero por noche', 'S/ 200 por noche sin experiencia y sin DNI no cuadra con un trabajo de atención. Tu necesidad es real: por eso vale revisar más.'], next: 'n2' },
-      { t: 'Buscar el número en Yape', do: [{ verifica: 'El número aparece en Yape sin nombre. Su perfil de WhatsApp no tiene foto ni estado.' }], a: ['verifica'], m: 'AB', fb: ['good', 'Confirmar por otro canal', 'Un número sin nombre y un perfil vacío no se pueden comprobar. Esa duda ya es una razón para no seguir.'], next: 'n2' },
-      { t: 'Bloquear y ya', do: ['bloquea'], fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 },
+      { t: 'Preguntar en el grupo si alguien lo conoce', do: [{ verifica: 'Preguntaste en el grupo. Nadie sabe de qué local habla, y otra chica responde que a ella le escribió lo mismo.' }], a: ['verifica'], m: 'AB', fb: ['good', 'Confirmar por otro canal', 'Si nadie conoce el local y le escribe lo mismo a varias chicas, esa duda basta para no seguir.'], end: 1 },
+      { t: 'Bloquear y ya', do: ['bloquea'], a: ['corta'], m: 'AB', fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 },
       { say: 'no gracias', a: ['corta'], m: 'AB', fb: ['good', 'No tienes que dar explicaciones', 'Una respuesta corta es suficiente.'], end: 1 }] },
     n2: { m: 'B', pausa: 1, msgs: [
       { pay: 'S/ 30', from: 'Lucho', label: 'Para tus datos', s: ['deuda'] },
-      ['Te mandé para tu recarga, para que veas que soy serio', 'deuda', 'confianza'],
-      ['El pasaje de ida y vuelta lo pagamos nosotros, después se descuenta de lo que ganes', 'deuda'],
-      ['No le cuentes a nadie del grupo, hay varias que quieren el puesto', 'aisla', 'apura']], opts: [
-      { say: 'graciaas! cuándo salgo?', a: ['sigue'], m: 'BC', fb: ['alert', 'Te deja en deuda', 'La recarga y el pasaje «que se descuenta» parecen ayuda, pero son una deuda que después te cobran. Pedirte que no lo cuentes busca que nadie sepa adónde vas.', 'deuda'], next: 'n3' },
-      { say: 'cómo se llama el local? dónde queda exacto?', a: ['pregunta'], fb: ['good', 'Una oferta real se puede comprobar', 'Un local real tiene nombre y dirección, y alguien en tu casa puede averiguar qué es.'], reply: [['Te digo cuando llegues, es más seguro así', 'norevisa'], ['Decide rápido, el jueves sale el carro', 'apura']], next: 'n2b' },
-      { t: 'Mandarle el chat a mi hermana', do: ['captura', { tell: 'hermana', text: 'Mira, uno del grupo me ofrece chamba en un local en Mazuko, S/ 200 por noche más fichas. Ya me yapeó S/ 30. ¿Qué es eso?' }], m: 'BC', fb: ['good', 'Cuenta la duda mientras pasa', 'Tu hermana sabe qué hay detrás de «fichas». Con la captura no tienes que explicarlo todo.'], end: 1 },
-      { t: 'Contarle a mamá', do: ['captura', { tell: 'mama', text: 'Ma, uno del grupo de compraventa me ofrece trabajo en un local en Mazuko, por noche y con fichas. Me mandó S/ 30.' }], m: 'BC', fb: ['good', 'Cuenta la duda mientras pasa', 'Contarlo con la captura le da a otra persona lo que necesita para ayudarte.'], end: 1 },
-      { t: '«Te devuelvo tu plata» y bloquear', say: 'te devuelvo tu plata, no me interesa', do: ['bloquea'], a: ['corta'], m: 'BC', fb: ['good', 'Los regalos no obligan', 'Un adelanto crea una deuda. Devolverlo y cortar es tu derecho, aunque pierdas la «oportunidad».'], end: 1 }] },
+      ['Ahí te mandé para tu recarga', 'deuda'],
+      ['El pasaje de ida y vuelta lo ponemos nosotros, después se descuenta de lo que ganes', 'deuda'],
+      ['El jueves sale el carro, 9 p. m., del paradero', 'lugar'],
+      ['A tu mamá dile que es una tienda', 'aisla'],
+      ['Hay varias que quieren el puesto', 'apura']], opts: [
+      { say: 'graciaas! ahí estaré', a: ['sigue'], m: 'BC', fb: ['alert', 'Te deja en deuda', 'La recarga y el pasaje «que se descuenta» parecen ayuda, pero son una deuda que después te cobran. Pedirte que mientas en tu casa busca que nadie sepa adónde vas.', 'deuda'], next: 'n3' },
+      { say: 'cómo se llama el local? dónde queda exacto?', a: ['pregunta', 'verifica'], fb: ['good', 'Una oferta real se puede comprobar', 'Un local real tiene nombre y dirección, y alguien en tu casa puede averiguar qué es.'], reply: [['Te digo cuando llegues, es más seguro así', 'norevisa']], next: 'n2b' },
+      { t: 'Mandarle el chat a mi hermana', do: ['captura', { tell: 'hermana', text: 'Mira, uno del grupo me ofrece chamba en un local en Mazuko, S/ 200 por noche más fichas. Ya me yapeó S/ 30. ¿Qué es eso?' }], fb: ['good', 'Cuenta la duda mientras pasa', 'Tu hermana sabe qué hay detrás de «fichas». Con la captura no tienes que explicarlo todo.'], end: 1 },
+      { t: 'Contarle a mamá', do: ['captura', { tell: 'mama', text: 'Ma, uno del grupo de compraventa me ofrece trabajo en un local en Mazuko, por noche y con fichas. Me mandó S/ 30.' }], fb: ['good', 'Cuenta la duda mientras pasa', 'Contarlo con la captura le da a otra persona lo que necesita para ayudarte.'], end: 1 },
+      { t: '«Te devuelvo tu plata» y bloquear', say: 'te devuelvo tu plata, no me interesa', do: ['bloquea'], a: ['corta'], fb: ['good', 'Los regalos no obligan', 'Un adelanto crea una deuda. Devolverlo y cortar es tu derecho, aunque pierdas la «oportunidad».'], end: 1 }] },
     n2b: { m: 'B', msgs: [], opts: [
       { say: 'ya, el jueves voy', a: ['sigue'], m: 'BC', fb: ['alert', 'No se puede revisar', 'Si no te dice el nombre del local hasta que llegues, nadie puede saber adónde vas.', 'norevisa'], next: 'n3' },
       { say: 'si no me dices el nombre, no voy', a: ['corta'], m: 'BC', fb: ['good', 'Tus condiciones te protegieron', 'Cuando una oferta no acepta tus condiciones, cortar es una buena salida.'], end: 1 },
@@ -965,12 +967,11 @@ SIM.addCase({
     n3: { m: 'C', pausa: 1, msgs: [
       { sys: 'El jueves, 9 p. m., en el paradero' },
       ['Ya llegó el señor del local, sube a la camioneta', 'lugar'],
-      ['A tu mamá dile que es trabajo en una tienda, para que no se preocupe', 'aisla'],
-      ['Allá nos das tu DNI para guardarlo, para que no se pierda', 'pide']], opts: [
-      { t: 'Subir a la camioneta', do: [{ sys: 'Subiste a la camioneta.' }], a: ['sigue'], harm: 1, m: 'D', fb: ['alert', 'Retener tu documento es una forma de control', 'Con menores de edad, tomar con clientes en un bar es explotación aunque digan que solo es conversar. El pasaje descontado y el DNI guardado son formas de retenerte. No es tu culpa y nunca es tarde para pedir ayuda.', 'pide'], end: 1 },
-      { say: 'no voy a subir', a: ['corta'], m: 'CD', fb: ['good', 'No subir es tu derecho', 'Aunque ya estés en el paradero, puedes decir que no. Perder el pasaje es mejor que ir.'], end: 1 },
+      ['Allá nos das tu DNI para guardarlo', 'pide']], opts: [
+      { t: 'Subir a la camioneta', do: [{ sys: 'Subiste a la camioneta.' }], a: ['sigue'], harm: 1, m: 'D', fb: ['alert', 'Te quiere llevar a un lugar', 'Subir a un carro rumbo a un local que no puedes comprobar te deja sin forma de volver. Allá te pueden pedir el DNI y cobrarte el pasaje para retenerte. Con menores de edad, tomar con clientes en un bar es explotación aunque digan que solo es conversar. No es tu culpa y nunca es tarde para pedir ayuda.', 'lugar'], end: 1 },
+      { say: 'no voy a subir', a: ['corta'], m: 'CD', fb: ['good', 'No subir es tu derecho', 'Aunque ya estés en el paradero, puedes decir que no. Perder el adelanto o la «oportunidad» es mejor que ir.'], end: 1 },
       { t: 'Mandarle mi ubicación a mi hermana', do: [{ tell: 'hermana', text: 'Estoy en el paradero, me quieren subir a una camioneta. Te mando mi ubicación.', reply: ['No subas. Quédate donde haya gente.', 'Ya voy para allá.'] }], m: 'CD', fb: ['good', 'Pediste ayuda desde el lugar', 'Pedir ayuda funciona aunque ya estés ahí.'], end: 1 },
-      { t: 'Llamar a la Línea 1818', do: [{ call: 'Línea 1818' }], m: 'CD', fb: ['good', 'Hay a quién acudir', 'La Línea 1818 recibe denuncias de trata de forma anónima y la Línea 100 atiende las 24 horas.'], end: 1 }] }
+      { t: 'Llamar a la Línea 100', do: [{ call: 'Línea 100' }], m: 'CD', fb: ['good', 'Hay a quién acudir', 'La Línea 100 atiende las 24 horas. Después, la Línea 1818 recibe denuncias de trata de forma anónima.'], end: 1 }] }
   }
 });
 
