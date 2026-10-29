@@ -1,6 +1,6 @@
 // Offline support for RADAR Simulador. Pages are network-first so updates show up
 // on the next visit; everything else is cache-first.
-const CACHE = 'radar-simulador-v1';
+const CACHE = 'radar-simulador-v2';
 const ASSETS = [
   './',
   './index.html',
