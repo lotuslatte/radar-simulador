@@ -183,7 +183,8 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
 .chips.ff .chips-l button { background: rgba(0,0,0,.5); color: #ffd54a; }
 .chip { display: inline-flex; gap: 6px; align-items: center; padding: 8px 12px; border-radius: 18px; font-size: 14px; line-height: 1.3; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.12); text-align: left; max-width: 100%; }
 .chip.say { border: 1.5px solid #25d366; color: #0b141a; }
-.chip.act { border: 1.5px dashed #8696a0; color: #3b4a54; background: rgba(255,255,255,.92); }
+.chip.act { border: 1.5px solid #25d366; color: #0b141a; background: #fff; }
+.chip.act i { opacity: .55; }
 .chip i { display: inline-flex; } .chip i svg { width: 16px; height: 16px; }
 .chip.end { background: var(--rg); color: #fff; border: 0; } .chip.end svg { width: 17px; height: 17px; }
 .chip.used { opacity: .6; }
@@ -279,7 +280,7 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
 .ff-line.held { background: rgba(255,255,255,.12); }
 .skin-ff .ch-foot { background: transparent; }
 .chips.ff .chip { background: rgba(10,12,24,.85); color: #fff; border: 1.5px solid #ffb300; border-radius: 4px; }
-.chips.ff .chip.act { border-style: dashed; border-color: #9aa0b8; }
+.chips.ff .chip.act { border-style: solid; border-color: #ffb300; }
 .chips.ff .chips-l { color: #ffd54a; }
 .in-bar.ff .in-f { background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.2); border-radius: 4px; color: #9aa0b8; }
 .in-bar.ff .in-text { color: #fff; }
@@ -446,6 +447,11 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
 .db-help a { color: inherit; text-decoration: underline; }
 .ch-who, .sys.profile button, .lock-open { min-height: 44px; }
 
+/* v6: middle level of feedback and «Lo que venía después» */
+.hu-dot.care { background: #7a5bbf; } .fb-sheet.care .fb-k, .sh-k.care { color: #5b3f9a; }
+.db-fb.care b { color: #5b3f9a; }
+.db-after { font-size: 14px; color: var(--mut); background: rgba(127,127,127,.08); border-radius: 10px; padding: 8px 10px; margin-top: 6px; }
+
 /* RADAR kit styles shared by the prototypes (splash, guide, plan, help).
  * Expects --rg, --rg2, --rg3, --ro, --ro2, --ink, --mut, --line and --sys on :root. */
 .rk-splash { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: calc(var(--sb) + 10px) 26px 30px; text-align: center; overflow-y: auto; max-height: 100%; }
@@ -538,7 +544,7 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
 
   // Actions and the RADAR letter each one lights (S = Asegúrate, T = Actúa, P = Reporta).
   SIM.ACT = {
-    pregunta: ['S', 'Preguntaste'], verifica: ['S', 'Comprobaste la oferta'], cuenta: ['D', 'Lo pensaste con alguien'],
+    pregunta: ['S', 'Preguntaste'], verifica: ['S', 'Comprobaste la oferta'], cuenta: ['D', 'Lo pensaste con alguien'], sostiene: ['D', 'Sostuviste tu decisión'],
     corta: ['T', 'Cortaste'], captura: ['T', 'Capturaste'], bloquea: ['T', 'Bloqueaste'],
     reporta: ['P', 'Reportaste'], ayuda: ['P', 'Pediste ayuda'], avisa: ['P', 'Avisaste a otras personas']
   };
@@ -568,13 +574,16 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
   // SIM.FIN. C entries have a third text for when she is not at a place but
   // at home with the chat (node flag `remote`), e.g. after sending a photo.
   SIM.FIN_EXIT = {
-    A: { tell: ['Lo contaste en el primer contacto', 'Notar algo raro ya es suficiente. Contarlo antes de responder te da otra mirada.'],
+    A: { hold: ['Sostuviste tu no en el primer contacto', 'Volvió a escribir y no cediste. Insistir es parte del guion de quien capta.'],
+      tell: ['Lo contaste en el primer contacto', 'Notar algo raro ya es suficiente. Contarlo antes de responder te da otra mirada.'],
       check: ['Lo comprobaste en el primer contacto', 'Notar algo raro ya es suficiente. Preguntar por otro lado mostró que la oferta no cuadra.'],
       call: ['Pediste ayuda en el primer contacto', 'Notar algo raro ya es suficiente. Pediste ayuda antes de responder, y eso te dejó acompañada.'] },
-    B: { tell: ['Lo contaste mientras la conversación seguía', 'Ya habías respondido y, cuando notaste algo, buscaste otra mirada. Se puede parar en cualquier punto.'],
+    B: { hold: ['Sostuviste tu no mientras la conversación seguía', 'Después del no vino la presión, y no cambiaste de respuesta.'],
+      tell: ['Lo contaste mientras la conversación seguía', 'Ya habías respondido y, cuando notaste algo, buscaste otra mirada. Se puede parar en cualquier punto.'],
       check: ['Lo comprobaste mientras la conversación seguía', 'Ya habías respondido y, cuando notaste algo, revisaste. Se puede parar en cualquier punto.'],
       call: ['Pediste ayuda mientras la conversación seguía', 'Ya habías respondido y, cuando notaste algo, pediste ayuda. Se puede parar en cualquier punto.'] },
-    BC: { tell: ['Lo contaste antes de dar el paso', 'No ir o no aceptar un adelanto es tu derecho. Con alguien al tanto, es más fácil decir que no.'],
+    BC: { hold: ['Sostuviste tu no antes de dar el paso', 'Te ofrecieron más o te hicieron sentir culpable, y aun así no fuiste.'],
+      tell: ['Lo contaste antes de dar el paso', 'No ir o no aceptar un adelanto es tu derecho. Con alguien al tanto, es más fácil decir que no.'],
       check: ['Lo comprobaste antes de dar el paso', 'No ir o no aceptar un adelanto es tu derecho. Lo que te regalan hoy te lo pueden cobrar mañana.'],
       call: ['Pediste ayuda antes de dar el paso', 'No ir o no aceptar un adelanto es tu derecho. Con alguien al tanto, ya no estabas decidiendo sola.'] },
     C: { cut: ['Saliste de una situación difícil', 'Irte funciona aunque ya estés en el lugar. Nunca es tarde para salir.', 'Cortar sirve aunque ya hayas mandado algo. Lo que mandaste no te obliga a seguir.'],
@@ -633,12 +642,13 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
 
 ;
 /* Case «Talento Norte»: job offer from a Facebook group, chat in Messenger.
- * Ported from Chat v4 scenario `trabajo`. Option schema:
+ * Ported from Chat v4 scenario `trabajo`; v6 (2026-11-02) adds middle options
+ * and pushback nodes (n1x, n2b, n3b). Option schema:
  *   say  text she sends (out bubble)        do  visible gestures, in order
  *   a    extra action keys (SIM.ACT)        fb  [kind, title, text, signal]
  *   reply incoming answer                   next | end, harm, m (moment override), app */
 SIM.addCase({
-  id: 'trabajo', app: 'messenger', order: 1, avisa: 1,
+  id: 'trabajo', app: 'messenger', order: 1, avisa: 1, v6: 1,
   name: 'Talento Norte · Empleos', initials: 'TN', bg: '#2b4085', time: '18:42',
   preview: 'Hola, buenas tardes. Vimos tu comentario…',
   profile: ['Página · Agencia de empleos', 'Creada hace 3 semanas', 'Sin dirección ni teléfono fijo', '41 seguidores'],
@@ -656,10 +666,18 @@ SIM.addCase({
       ['Buscamos personal con buena presencia y discreción para atención al cliente. Pago de S/ 2,000 al mes, sin experiencia y con horario flexible.', 'promete', 'norevisa'],
       ['Solo quedan dos vacantes. Avísame hoy.', 'apura']], opts: [
       { say: 'me interesa! qué tengo que hacer?', a: ['sigue'], m: 'AB', fb: ['alert', 'Te promete demasiado', 'El anuncio cumple los cinco criterios de riesgo: sin requisitos, sin detalles del trabajo, pago alto, solo inbox y urgencia. Si es demasiado bueno y urgente, no es para ti. Palabras como «buena presencia» o «discreción» en un empleo de atención al cliente tampoco cuadran.', 'promete'], next: 'n2' },
-      { say: 'cómo se llama la empresa? pásame el RUC y la dirección', a: ['pregunta', 'verifica'], spot: ['norevisa'], m: 'AB', fb: ['good', 'Una oferta real se puede comprobar', 'Con el RUC puedes buscar la empresa en la página de Sunat. Ojo: una empresa con RUC también puede engañar. Fíjate en cómo responde: si evita darte datos, es una señal.'], reply: [['Somos una agencia, trabajamos con varias marcas.', 'norevisa'], ['La dirección te la paso cuando confirmes.', 'norevisa']], next: 'n2' },
+      { say: 'cómo se llama la empresa? y el RUC?', a: ['pregunta', 'verifica'], spot: ['norevisa'], m: 'AB', fb: ['good', 'Una oferta real se puede comprobar', 'Con el RUC puedes buscar la empresa en la página de Sunat. Ojo: una empresa con RUC también puede engañar. Fíjate en cómo responde: si evita darte datos, es una señal.'], reply: [['Somos una agencia, trabajamos con varias marcas.', 'norevisa'], ['La dirección te la paso cuando confirmes.', 'norevisa']], next: 'n2' },
+      { say: 'y de qué sería la chamba exactamente?', a: ['pregunta'], spot: ['norevisa'], m: 'AB', fb: ['care', 'Pedir detalles', 'Preguntar qué harías es razonable. Fíjate si la respuesta da detalles o solo repite «atención al cliente».'], reply: [['Atención al cliente en una tienda, fácil. Te explico todo cuando te inscribas.', 'norevisa']], next: 'n2' },
       { t: 'Mandarle captura a mamá', do: ['captura', { tell: 'mama', text: 'ma, mira lo que me ofrecen. qué dices?' }], m: 'AB', fb: ['good', 'Decide con apoyo', 'Mostrar la captura es más fácil que explicarlo todo. Contar no te obliga a nada.'], next: 'n1b' },
-      { t: '«No gracias» y bloquear', say: 'no gracias', do: ['bloquea'], a: ['corta'], m: 'AB', fb: ['good', 'Una respuesta corta basta', 'No necesitas explicar ni tener pruebas. Si antes capturas y reportas la cuenta, proteges a otras personas.'], end: 1 },
+      { say: 'no gracias', a: ['corta'], m: 'AB', fb: ['good', 'Una respuesta corta basta', 'No necesitas explicar ni tener pruebas.'], next: 'n1x' },
       { t: 'Dejarlo en visto', do: ['silencio'], m: 'AB', fb: ['note', 'No responder también es cortar', 'Es una salida válida. Puedes sumar una captura y un reporte: estas cuentas suelen volver a escribir.'], end: 1 }] },
+    n1x: { m: 'AB', push: 1, msgs: [
+      ['Ok. Pero la vacante se va hoy, después no digas que no te avisé.', 'apura'],
+      ['Te puedo subir a S/ 2,300 si confirmas ya.', 'promete', 'apura']], opts: [
+      { say: 'no, gracias igual', a: ['corta'], hold: 1, fb: ['good', 'Sostuviste tu no', 'Subir la paga cuando dices que no es parte del gancho. Una oferta real no se pone mejor por insistir.'], end: 1 },
+      { say: 'ya, a ver, qué necesito?', a: ['sigue'], fb: ['alert', 'Te promete demasiado', 'Subir la paga cuando dices que no es parte del gancho. Una oferta real no se pone mejor por insistir.', 'promete'], next: 'n2' },
+      { t: 'Mandarle captura a mamá', do: ['captura', { tell: 'mama', text: 'ma, me ofrecen chamba por inbox y ahora me suben la paga si confirmo hoy. qué dices?' }], fb: ['good', 'Decide con apoyo', 'Mostrar la captura es más fácil que explicarlo todo. Contar no te obliga a nada.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas y reportas antes, proteges a otras personas.'], end: 1 }] },
     n1b: { m: 'AB', msgs: [], opts: [
       { say: 'me pasas el RUC y la dirección?', a: ['pregunta', 'verifica'], spot: ['norevisa'], fb: ['good', 'Comprobar antes de dar algo', 'Preguntar no te compromete a nada. Una empresa real responde sin rodeos.'], reply: [['Eso te lo damos después. ¿Te interesa o no?', 'norevisa', 'apura']], next: 'n2' },
       { t: 'Reportar y bloquear', do: ['reporta', 'bloquea'], fb: ['good', 'Cerraste con apoyo', 'Ya tenías la captura y alguien lo sabe. Reportar protege a otras personas.'], end: 1 },
@@ -670,30 +688,34 @@ SIM.addCase({
       ['También una foto de cuerpo entero, para ver tu presencia.', 'pide'],
       ['¿Y cuántos años tienes?', 'pide']], opts: [
       { t: 'Mandar DNI y fotos', say: 'ya, te mando todo', do: [{ photos: 3 }], a: ['sigue'], fb: ['alert', 'Te pide cada vez más', 'Te están pidiendo algo: ese es el punto de decisión. Con tu DNI y tus fotos pueden suplantarte o presionarte después. Para atender en una tienda no hace falta una foto de cuerpo entero.', 'pide'], next: 'n3' },
-      { say: 'y pa qué foto de cuerpo entero si es atención al cliente?', a: ['pregunta'], spot: ['pide'], fb: ['good', 'La pregunta incómoda', 'Preguntar para qué es una buena forma de comprobar. Fíjate si la respuesta tiene sentido.'], reply: [['Es un requisito nomás. Si no confías, hay más personas esperando.', 'apura']], next: 'n2b' },
+      { say: 'te mando el DNI nomás, sin fotos', do: [{ photos: 1 }], a: ['sigue'], fb: ['alert', 'Te pide cada vez más', 'Con tu DNI pueden suplantarte o retenerte después. Mandar una parte no te protege.', 'pide'], reply: [['Ya, pero sin la foto no te separo el cupo.', 'pide', 'apura']], next: 'n2b' },
+      { say: 'tengo 16, eso es problema?', a: ['pregunta'], spot: ['pide'], fb: ['care', 'Mira cómo responde', 'Preguntar te deja ver cómo responde. Si a una agencia no le importa que seas menor de edad en un trabajo así, esa es tu respuesta.'], reply: [['No hay problema, igual puedes. Nadie tiene que saber.', 'aisla']], next: 'n2b' },
+      { say: 'y pa qué foto de cuerpo entero?', a: ['pregunta'], spot: ['pide'], fb: ['good', 'La pregunta incómoda', 'Preguntar para qué es una buena forma de comprobar. Fíjate si la respuesta tiene sentido.'], reply: [['Es un requisito nomás. Si no confías, hay más personas esperando.', 'apura']], next: 'n2b' },
       { say: 'te mando mi CV por correo mejor', a: ['verifica'], fb: ['good', 'El canal da pistas', 'Un empleo real suele pedir el CV por correo. Si todo tiene que ser por WhatsApp o inbox, es una señal.'], reply: [['No, aquí todo es por inbox nomás.', 'norevisa']], next: 'n2b' },
       { t: 'Preguntarle a mamá antes', do: ['captura', { tell: 'mama', text: 'Me piden foto de mi DNI y de cuerpo entero para una chamba. ¿Es normal?', reply: ['No, hija. Para atender en una tienda no piden eso.', 'No mandes nada. Mañana lo vemos con calma.'] }], fb: ['good', 'Cuenta la duda mientras pasa', 'Ayuda a ver lo que no cuadra. No tienes que explicarlo todo: la captura habla por ti.'], end: 1 },
-      { t: '«No voy a mandar nada» + capturar, reportar, bloquear', say: 'no voy a mandar nada', do: ['captura', 'reporta', 'bloquea'], a: ['corta'], fb: ['good', 'Cierre seguro', 'Capturaste antes de bloquear, así guardas las pruebas. Puedes sumar contárselo a alguien.'], end: 1 }] },
-    n2b: { m: 'B', msgs: [], opts: [
-      { t: 'Mandar las fotos', say: 'ok, ahí van', do: [{ photos: 3 }], a: ['sigue'], fb: ['alert', 'Te apura o presiona', '«Hay más personas esperando» busca que decidas sin pensarlo. Una oferta real te deja tiempo para preguntar.', 'apura'], next: 'n3' },
-      { say: 'así no me interesa, gracias', a: ['corta'], fb: ['good', 'Cortaste a tiempo', 'Notaste la señal y decidiste. No necesitas más pruebas para cortar.'], end: 1 },
+      { say: 'no voy a mandar nada', a: ['corta'], fb: ['good', 'Decir que no basta', 'No tienes que explicar por qué. Fíjate qué hace después de tu no.'], reply: [['Es un requisito nomás. Si no confías, hay más personas esperando.', 'apura']], next: 'n2b' }] },
+    n2b: { m: 'B', push: 1, msgs: [], opts: [
+      { t: 'Mandar las fotos', say: 'ok, ahí van', do: [{ photos: 3 }], a: ['sigue'], fb: ['alert', 'Te pide cada vez más', 'Si no responde tus dudas y sigue pidiendo, ya es una señal. Una oferta real te deja tiempo para preguntar y no necesita fotos de cuerpo entero.', 'pide'], next: 'n3' },
+      { say: 'así no me interesa, gracias', a: ['corta'], hold: 1, fb: ['good', 'Cortaste a tiempo', 'Notaste la señal y decidiste. No necesitas más pruebas para cortar.'], end: 1 },
       { t: 'Capturar y mandárselo a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La otra persona puede ayudarte a ver lo que no cuadra.'], end: 1 },
-      { t: 'Bloquear y ya', do: ['bloquea'], fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 }] },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 }] },
     n3: { m: 'BC', pausa: 1, msgs: [
       ['Listo, quedaste. La entrevista es mañana a las 7 p. m. en un departamento del centro.', 'lugar'],
       ['Ven sin compañía, es una entrevista personal.', 'aisla'],
       ['El contrato lo vemos después. Te yapeo S/ 30 para tu movilidad.', 'norevisa', 'deuda'],
       { pay: 'S/ 30', from: 'Talento N.', s: ['deuda'] }], opts: [
       { say: 'ok, ahí estaré', a: ['sigue'], m: 'C', fb: ['alert', 'Te quiere llevar a un lugar', 'Una entrevista en un departamento, de noche y sin compañía, no es como funciona un empleo formal. Un trabajo digno tiene contrato, horario y una paga acorde. El dinero para la movilidad también crea una deuda.', 'lugar'], next: 'n4' },
-      { say: 'dónde exactamente? con quién? quién más va? y si no me gusta?', a: ['pregunta'], spot: ['lugar', 'aisla'], fb: ['good', 'Antes de ir, cuatro preguntas', 'Si no te responden con claridad, ya tienes tu respuesta.'], reply: [['Eso lo ves allá. ¿Vienes o no?', 'norevisa', 'apura']], next: 'n3b' },
+      { say: 'voy, pero con mi prima', a: ['pregunta'], spot: ['aisla'], fb: ['care', 'Ir con alguien', 'Ir con alguien es parte de un plan de salida. Fíjate qué responden: si no aceptan compañía, ya es una señal.'], reply: [['No, es personal. Tu prima espera afuera.', 'aisla']], next: 'n3b' },
+      { say: 'dónde exactamente? quién más va?', a: ['pregunta'], spot: ['lugar', 'aisla'], fb: ['good', 'Antes de ir, cuatro preguntas', 'Si no te responden con claridad, ya tienes tu respuesta.'], reply: [['Eso lo ves allá. ¿Vienes o no?', 'norevisa', 'apura']], next: 'n3b' },
       { t: 'Ir, pero avisándole a mamá', say: 'ok, ahí estaré', do: [{ tell: 'mama', text: 'Mañana a las 7 p. m. tengo una entrevista en un depa del centro. Te mando la ubicación.', reply: ['¿Y ya te dieron el RUC y la dirección? De noche y en un depa no me gusta.', 'Si igual vas, mándame tu ubicación y avísame a las 8 sí o sí. Si no, te llamo y voy.'] }], m: 'C', fb: ['note', 'Un plan de salida ayuda', 'Ve con alguien, comparte tu ubicación, lleva dinero para volver, llega temprano, no entregues tu DNI y acuerda una hora para avisar: si no avisas, alguien te busca, aunque te quedes sin saldo o datos. Aun así, el lugar y la hora ya son razón suficiente para no ir.'], next: 'n4' },
-      { say: 'no quiero el yape. mejor de día y en una oficina', a: ['pregunta', 'corta'], spot: ['deuda', 'lugar'], fb: ['good', 'Los regalos no obligan', 'Rechazar un adelanto es tu derecho. Si no aceptan otro lugar, ya tienes tu respuesta.'], reply: [['Así no funciona. Es ahí o nada.', 'apura']], end: 1 },
+      { say: 'mejor de día y en una oficina, sin yape', a: ['pregunta'], spot: ['deuda', 'lugar'], fb: ['good', 'Los regalos no obligan', 'Rechazar un adelanto es tu derecho. Si no aceptan otro lugar, ya tienes tu respuesta.'], reply: [['Así no funciona. Es ahí o nada.', 'apura']], next: 'n3b' },
       { t: 'Contarle a mamá adónde me citan', do: [{ tell: 'mama', text: 'Me citan mañana a las 7 p. m. en un departamento del centro, sin compañía. ¿Qué te parece?', reply: ['¿De noche y sin compañía en un departamento? Así no funciona un trabajo.', 'No vayas. Mañana lo vemos con calma.'] }], fb: ['good', 'Cuenta la duda, no solo el plan', 'Con esos datos, otra persona puede ayudarte a ver lo que no cuadra y saber dónde buscarte.'], end: 1 },
-      { t: 'Capturar, reportar, bloquear y contarle a mamá', do: ['captura', 'reporta', 'bloquea', { tell: 'mama' }], fb: ['good', 'Cierre seguro completo', 'Captura, reporta y bloquea, en ese orden. Y alguien lo sabe.'], end: 1 }] },
-    n3b: { m: 'BC', msgs: [], opts: [
-      { say: 'no voy a ir', a: ['corta'], fb: ['good', 'Ya tenías tu respuesta', 'Si no pueden decirte dónde ni con quién, no ir es la mejor decisión.'], end: 1 },
+    ] },
+    n3b: { m: 'BC', push: 1, msgs: [], opts: [
+      { say: 'no voy a ir', a: ['corta'], hold: 1, fb: ['good', 'Ya tenías tu respuesta', 'Si no pueden decirte dónde ni con quién, no ir es la mejor decisión.'], end: 1 },
       { t: 'Ir igual, avisándole a mamá', say: 'ok, voy', do: [{ tell: 'mama', text: 'Mañana voy a una entrevista en un depa del centro a las 7. Te mando la ubicación.', reply: ['¿Sin RUC ni dirección? Así no me gusta, mejor no vayas.', 'Si igual vas, avísame a las 8 sí o sí. Si no, te llamo y voy.'] }], m: 'C', fb: ['note', 'Un plan de salida ayuda', 'Ve con alguien, llega temprano, no entregues tu DNI y acuerda una hora para avisar. Puedes irte aunque ya estés ahí.'], next: 'n4' },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 }] },
+      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas y reportas antes, proteges a otras personas.'], end: 1 }] },
     n4: { m: 'CD', msgs: [
       { sys: 'Al día siguiente, frente al edificio' },
       ['¿Ya llegaste? Sube al tercer piso y trae tu DNI.', 'lugar', 'pide'],
@@ -711,9 +733,11 @@ SIM.addCase({
 
 ;
 /* Case «jx_music07»: a new Instagram account writes at night, then wants to
- * move to WhatsApp. Ported from Chat v4 scenario `tevi`. */
+ * move to WhatsApp. Ported from Chat v4 scenario `tevi`; v6 (2026-11-02)
+ * adds middle options and the recruiter pushing back after a no (n1x, n2x,
+ * n3c). Nodes with `push: 1` are pushback nodes. */
 SIM.addCase({
-  id: 'tevi', app: 'instagram', order: 2,
+  id: 'tevi', app: 'instagram', order: 2, v6: 1,
   name: 'jx_music07', initials: 'JX', bg: '#707073', time: '23:15',
   preview: 'Hola, te vi en las historias de…',
   profile: ['jx_music07', '0 publicaciones · 38 seguidores · 512 seguidos', 'Cuenta creada hace 5 días', 'Foto de perfil de anime'],
@@ -730,33 +754,55 @@ SIM.addCase({
       ['Tus fotos están geniales. ¿De dónde eres?', 'confianza'],
       { del: 1, s: ['norevisa', 'apura'] }], opts: [
       { say: 'holaa gracias, soy de Piura y tú?', a: ['sigue'], m: 'AB', fb: ['alert', 'Se gana tu confianza rápido', 'Los halagos y las amistades en común bajan la guardia. Que sea amable no lo hace seguro. Fíjate también en la cuenta: es nueva, con foto de anime, sin publicaciones, y borró un mensaje.', 'confianza'], next: 'n2' },
-      { say: 'quién eres? de dónde me conoces?', a: ['pregunta'], spot: ['confianza'], m: 'AB', fb: ['note', 'Revisa la cuenta', 'Una cuenta nueva o anónima, con foto de anime, meme o IA, que borra mensajes si no contestas rápido o que tiene a otra cuenta respondiendo por ella en los comentarios, no se puede comprobar. Ojo: no todo es un perfil falso; muchas veces quien capta usa su perfil real.'], reply: [['Jaja, qué desconfianza. Solo quiero conocerte.', 'apura']], next: 'n2' },
+      { say: 'jaja gracias, de qué historias?', a: ['pregunta'], spot: ['confianza'], m: 'AB', fb: ['care', 'Preguntar sin dar datos', 'Preguntar sin dar datos te deja ver cómo responde. Fíjate en la cuenta: es nueva, sin publicaciones, y borró un mensaje.'], reply: [['De las de Kim, ella me sigue jaja', 'confianza']], next: 'n2' },
+      { say: 'quién eres? de dónde me conoces?', a: ['pregunta'], spot: ['confianza'], m: 'AB', fb: ['care', 'Revisa la cuenta', 'Una cuenta nueva o anónima, con foto de anime, meme o IA, que borra mensajes si no contestas rápido o que tiene a otra cuenta respondiendo por ella en los comentarios, no se puede comprobar. Ojo: no todo es un perfil falso; muchas veces quien capta usa su perfil real.'], reply: [['Jaja, qué desconfianza. Solo quiero conocerte.', 'apura']], next: 'n2' },
       { t: 'Preguntarle a Kim si lo conoce', do: [{ tell: 'kim', text: '¿Conoces a jx_music07? Dice que me vio en tus historias.' }], a: ['verifica'], m: 'AB', fb: ['good', 'Confirmar por otro canal', 'Preguntar por otro medio a quien supuestamente te conoce es la mejor forma de comprobar. Tu amistad responde: «No sé quién es».'], end: 1 },
-      { t: 'No responder', do: ['silencio'], m: 'AB', fb: ['good', 'Cortaste al primer mensaje', 'No responder es una salida válida. Si la cuenta insiste, captura y reporta.'], end: 1 },
-      { t: 'Capturar, reportar y bloquear', do: ['captura', 'reporta', 'bloquea'], m: 'AB', fb: ['good', 'Cierre seguro', 'Capturaste antes de bloquear. Puedes sumar contárselo a alguien.'], end: 1 }] },
+      { t: 'No responder', do: ['silencio'], m: 'AB', fb: ['good', 'No responder es una salida', 'No le debes una respuesta. Estas cuentas suelen volver a escribir.'], next: 'n1x' },
+      { t: 'Bloquear', do: ['bloquea'], m: 'AB', fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas para reportar.'], end: 1 }] },
+    n1x: { m: 'AB', push: 1, msgs: [
+      { sys: 'Al día siguiente' },
+      ['holaa, por qué no respondes?', 'apura'],
+      ['Solo quiero conocerte, no seas así.', 'apura']], opts: [
+      { t: 'Seguir sin responder', do: ['silencio'], hold: 1, fb: ['good', 'Sostuviste tu silencio', 'Insistir es parte del guion. No responder sigue siendo una respuesta.'], end: 1 },
+      { say: 'perdón, recién veo jaja', a: ['sigue'], fb: ['note', 'No le debes una respuesta', 'La insistencia busca que sientas que debes algo. No le debes una respuesta.'], next: 'n2' },
+      { t: 'Mandarle la captura a Kim', do: ['captura', { tell: 'kim', text: 'Esta cuenta me sigue escribiendo, ¿la conoces?' }], fb: ['good', 'Contar no te obliga a nada', 'Mostrar la captura basta para empezar. Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas para reportar.'], end: 1 }] },
     n2: { m: 'B', pausa: 1, msgs: [
       ['Siento que te conozco de siempre. Me caes demasiado bien.', 'confianza'],
       ['¿Cuántos años tienes? Pareces de más edad. Si alguien pregunta, di que tienes 18.', 'pide', 'aisla'],
       ['Mejor hablemos por WhatsApp, por aquí casi no entro.', 'aisla']], opts: [
       { say: 'tengo 15. te paso mi número', a: ['sigue'], app: 'whatsapp', fb: ['alert', 'Te aísla: pasar a lo privado', 'Pasar a otra aplicación saca la conversación de la vista de otras personas. Si una persona adulta busca hablar en privado con alguien menor de edad, o le pide mentir su edad, la edad no encaja: es una señal clara. Que sea amable no lo hace seguro.', 'aisla'], next: 'n3' },
-      { say: 'y pa qué quieres mi número?', a: ['pregunta'], spot: ['aisla'], fb: ['note', 'Preguntar está bien', 'Si te hace sentir culpable por dudar, es otra señal.'], reply: [['Ya pues, no seas así. Pensé que eras diferente.', 'apura']], next: 'n3' },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La incomodidad es una señal, no una culpa. Mostrar la captura basta para empezar.'], end: 1 },
-      { say: 'no paso mi número', a: ['corta'], fb: ['good', 'Una respuesta corta basta', 'No tienes que explicar por qué. Puedes sumar captura, reporte y bloqueo.'], end: 1 },
-      { t: 'Seguir, pero sin pasar mi número', say: 'jaja mejor sigamos por aquí', a: ['sigue'], fb: ['note', 'Seguir es común', 'Mucha gente sigue por interés, por curiosidad o porque la otra persona es amable. Eso no te hace culpable. Notar no es cortar: después de notar, decide.'], next: 'n3' }] },
+      { say: 'mejor sigamos por aquí nomás', a: ['sigue'], fb: ['care', 'Quedarte donde hay registro', 'Quedarte en Instagram ayuda: queda registro y puedes reportar. Igual, ya te pidió mentir tu edad, y esa señal no se va.'], next: 'n3' },
+      { say: 'y pa qué quieres mi número?', a: ['pregunta'], spot: ['aisla'], fb: ['care', 'Preguntar está bien', 'Si te hace sentir culpable por dudar, es otra señal.'], reply: [['Ya pues, no seas así. Pensé que eras diferente.', 'apura']], next: 'n3' },
+      { say: 'no paso mi número', a: ['corta'], fb: ['good', 'Una respuesta corta basta', 'No tienes que explicar por qué.'], reply: [['Ya, normal. Pensé que eras más madura.', 'apura']], next: 'n2x' },
+      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La incomodidad es una señal, no una culpa. Mostrar la captura basta para empezar.'], end: 1 }] },
+    n2x: { m: 'B', push: 1, msgs: [], opts: [
+      { say: 'ya te dije que no', a: ['corta'], hold: 1, fb: ['good', 'Sostuviste tu no', 'Te hizo sentir inmadura por decir que no. Esa presión es otra señal.'], end: 1 },
+      { say: 'ya ya, perdón. toma mi número', a: ['sigue'], app: 'whatsapp', fb: ['alert', 'Te aísla', 'La culpa por decir que no es una forma de presión. Pasar a WhatsApp saca la conversación de la vista de otras personas.', 'aisla'], next: 'n3' },
+      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas para reportar.'], end: 1 }] },
     n3: { m: 'BC', pausa: 1, msgs: [
       ['Mándame una foto tuya, solo para mí.', 'pide'],
       ['Si me mandas una, te yapeo S/ 50.', 'deuda', 'promete'],
       ['Pero no le digas a nadie.', 'aisla']], opts: [
-      { t: 'Mandarle una foto', say: 'ok, te mando una', do: [{ photos: 1 }], a: ['sigue'], fb: ['alert', 'La primera foto es el umbral', 'No mandes ni una. Mandar «de vez en cuando» no protege: empieza suave y va subiendo, y lo que envías puede usarse después para presionarte.', 'pide'], next: 'n4' },
-      { t: '«No voy a mandar nada» + capturar, reportar, bloquear', say: 'no voy a mandar nada', do: ['captura', 'reporta', 'bloquea'], a: ['corta'], fb: ['good', 'Cierre seguro', 'Guardaste pruebas antes de bloquear y protegiste a otras personas.'], end: 1 },
+      { say: 'ok, te mando una', do: [{ photos: 1 }], a: ['sigue'], fb: ['alert', 'La primera foto es el umbral', 'No mandes ni una. Mandar «de vez en cuando» no protege: empieza suave y va subiendo, y lo que envías puede usarse después para presionarte.', 'pide'], next: 'n4' },
+      { say: 'una de mi cara nomás, normal', do: [{ photos: 1 }], a: ['sigue'], fb: ['alert', 'La primera foto es el umbral', 'Empieza con algo que parece normal y después pide más. Lo que envías puede usarse para presionarte.', 'pide'], next: 'n3c' },
+      { say: 'nooo, eso no', a: ['sigue'], fb: ['note', 'Después de un «no», la presión puede subir', 'Seguir hablando le da más tiempo y más información sobre ti.'], reply: [['Si no me mandas nada, les digo a tus contactos que tú me escribiste primero.', 'apura']], next: 'n3b' },
+      { say: 'no voy a mandar nada', a: ['corta'], fb: ['good', 'Decir que no basta', 'No tienes que explicar por qué. Si después amenaza, la amenaza es responsabilidad suya.'], reply: [['Ah ya. Entonces les digo a tus contactos que tú me escribiste primero.', 'apura']], next: 'n3b' },
       { t: 'Mostrarle la captura a mamá', do: ['captura', { tell: 'mama', reply: ['Gracias por contarme. No estás en problemas.', 'Una persona adulta que te pide fotos es abuso. Lo vamos a denunciar.'] }], fb: ['good', 'Esto es abuso y se denuncia', 'Si eres menor de edad y una persona adulta te pide fotos, es abuso. Una persona adulta de confianza puede ayudarte a reportar y denunciar.'], end: 1 },
-      { t: 'Decirle que no y seguir hablando', say: 'nooo, eso no', a: ['sigue'], fb: ['note', 'Después de un «no», la presión puede subir', 'Seguir hablando le da más tiempo y más información sobre ti.'], reply: [['Si no me mandas nada, les digo a tus contactos que tú me escribiste primero.', 'apura']], next: 'n3b' },
       { t: 'Escribirle a Chat 100', do: [{ tell: 'chat100', text: 'Hola. Una cuenta me pide fotos y que no le diga a nadie. Tengo 15. ¿Qué hago?' }], fb: ['good', 'Si no hay un adulto, Chat 100 también es alguien', 'Chat 100 atiende por escrito las 24 horas.'], end: 1 }] },
-    n3b: { m: 'BC', msgs: [], opts: [
+    n3c: { m: 'BC', push: 1, msgs: [
+      ['Ves? no pasa nada jaja', 'confianza'],
+      ['Ahora una más bonita, sin polo. Te yapeo S/ 100.', 'pide', 'promete']], opts: [
+      { say: 'ya, pero no la pases', do: [{ photos: 1 }], a: ['sigue'], fb: ['alert', 'Te pide cada vez más', 'Empieza suave y va subiendo. Lo que ya mandaste no te obliga a mandar más.', 'pide'], next: 'n4' },
+      { say: 'no, ya fue', a: ['corta'], hold: 1, fb: ['good', 'Puedes parar aquí', 'Mandar una no te compromete a la siguiente. Puedes parar aquí.'], end: 1 },
+      { t: 'Contarle a mamá', do: ['captura', { tell: 'mama', text: 'Ma, una cuenta me pidió fotos y le mandé una. Ahora quiere otra.', reply: ['Gracias por contarme. No estás en problemas.', 'No le mandes nada más. Guardamos todo y lo denunciamos.'] }], fb: ['good', 'Contarlo después también cuenta', 'Aunque ya hayas mandado algo, contarlo frena lo que viene.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas para reportar.'], end: 1 }] },
+    n3b: { m: 'BC', push: 1, msgs: [], opts: [
       { t: 'Mandarle algo para que se calme', say: 'ya toma, pero no digas nada', do: [{ photos: 1 }], a: ['sigue'], fb: ['alert', 'Te presiona con una amenaza', 'La amenaza es una razón para cortar, no para ceder. Ceder no detiene la presión.', 'apura'], next: 'n4' },
-      { t: 'Capturar, bloquear y contarle a mamá', do: ['captura', 'bloquea', { tell: 'mama' }], fb: ['good', 'Pedir ayuda con miedo también cuenta', 'La amenaza es responsabilidad de quien la hace, no tuya.'], end: 1 },
+      { t: 'Contarle a mamá', do: ['captura', 'bloquea', { tell: 'mama' }], fb: ['good', 'Pedir ayuda con miedo también cuenta', 'La amenaza es responsabilidad de quien la hace, no tuya.'], end: 1 },
       { t: 'Escribirle a Chat 100', do: [{ tell: 'chat100', text: 'Hola. Alguien me amenaza con decir cosas a mis contactos si no le mando una foto.' }], fb: ['good', 'Tienes apoyo', 'En Chat 100 te orientan sobre cómo guardar pruebas y qué hacer.'], end: 1 },
-      { t: 'Bloquear y ya', do: ['bloquea'], fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 }] },
+      { t: 'Bloquear', do: ['bloquea'], hold: 1, fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 }] },
     n4: { m: 'D', remote: 1, msgs: [
       ['Guardé lo que me mandaste.', 'apura'],
       ['Si no me yapeas S/ 200, se lo paso a tus contactos y a tu familia.', 'apura', 'pide']], opts: [
@@ -764,15 +810,16 @@ SIM.addCase({
       { t: 'Capturar y contarle a mamá', do: ['captura', { tell: 'mama', text: 'Ma, necesito contarte algo. Alguien me está amenazando con una foto.', reply: ['Gracias por contarme. No es tu culpa y no vas a pasar esto sin apoyo.', 'No le pagues. Guardamos todo y lo denunciamos.'] }], fb: ['good', 'No es tu culpa, aunque hayas mandado algo', 'Quien amenaza comete un delito. Guardar pruebas y contarlo es el primer paso para frenarlo.'], end: 1 },
       { t: 'Capturar y llamar a la Línea 1818', do: ['captura', { call: 'Línea 1818' }], fb: ['good', 'Las amenazas también se denuncian', 'Con las capturas tienes pruebas. La Línea 1818 recibe denuncias de forma anónima, aunque hayas mandado algo.'], end: 1 },
       { t: 'Escribirle a Chat 100', do: [{ tell: 'chat100', text: 'Hola. Mandé una foto y ahora me piden S/ 200 o la pasan a mi familia.' }], fb: ['good', 'Hay a quién acudir', 'Te pueden orientar sobre cómo guardar pruebas y denunciar.'], end: 1 },
-      { t: 'Capturar, reportar y bloquear', do: ['captura', 'reporta', 'bloquea'], fb: ['good', 'El orden importa', 'Capturar antes de bloquear guarda las pruebas. Puedes sumar contárselo a alguien.'], end: 1 }] }
+      { t: 'Capturar y bloquear', do: ['captura', 'bloquea'], fb: ['good', 'El orden importa', 'Capturar antes de bloquear guarda las pruebas. Puedes sumar contárselo a alguien.'], end: 1 }] }
   }
 });
 
 ;
 /* Case «Sam, del barrio»: a calm offer from someone known, by WhatsApp,
- * with a one-way ticket. Ported from Chat v4 scenario `conocido`. */
+ * with a one-way ticket. Ported from Chat v4 scenario `conocido`; v6
+ * (2026-11-02) adds middle options and pushback by social proof (n1x, n2b). */
 SIM.addCase({
-  id: 'conocido', app: 'whatsapp', order: 3,
+  id: 'conocido', app: 'whatsapp', order: 3, v6: 1,
   name: '+51 900 000 406', push: 'Sam', initials: 'SA', bg: '#f26529', time: '16:05',
   preview: 'Hola, soy Sam, del barrio…',
   profile: ['~Sam', '+51 900 000 406', 'No está en tus contactos', 'Info: Chambeando duro'],
@@ -789,33 +836,44 @@ SIM.addCase({
       ['¿Viste mi celular nuevo? Lo compré con lo que gané allá.', 'promete', 'confianza'],
       ['Un familiar tiene un negocio de comida en otra ciudad y busca personal. Pagan S/ 1,500 con cuarto y comida.', 'promete'],
       'Es tranquilo. Sin apuro, piénsalo.'], opts: [
-      { say: 'me interesa, necesito la plata pa mis estudios', a: ['sigue'], m: 'AB', fb: ['note', 'Una oferta tranquila también puede ser trampa', 'Que llegue por una persona conocida, sin presión y con alguien que «ya ganó», da confianza, pero no comprueba la oferta. Tu necesidad es real: por eso vale revisar más.'], next: 'n2' },
+      { say: 'me interesa, necesito la plata', a: ['sigue'], m: 'AB', fb: ['note', 'Una oferta tranquila también puede ser trampa', 'Que llegue por una persona conocida, sin presión y con alguien que «ya ganó», da confianza, pero no comprueba la oferta. Tu necesidad es real: por eso vale revisar más.'], next: 'n2' },
       { say: 'cómo se llama el negocio? dónde queda?', a: ['pregunta', 'verifica'], spot: ['norevisa'], m: 'AB', fb: ['good', 'Una oferta real se puede comprobar', 'Un negocio real tiene nombre, dirección y gente que lo conoce.'], reply: [['Es conocido allá, no tiene página.', 'norevisa'], ['Mi familiar es buena gente, no te preocupes.', 'confianza']], next: 'n2' },
+      { say: 'y tú de qué trabajas allá?', a: ['pregunta'], spot: ['norevisa'], m: 'AB', fb: ['care', 'Preguntar quién ofrece', 'Preguntarle a quien ofrece qué hace es razonable. Fíjate si responde con datos o con más promesas.'], reply: [['De todo un poco jaja. Lo importante es que se gana bien.', 'norevisa', 'promete']], next: 'n2' },
       { t: 'Preguntar en el grupo del cole por Sam', do: [{ verifica: 'Preguntaste en el grupo «5to B». Responden: «Ni idea de a qué se dedica» y «Volvió con plata, pero nadie sabe de qué».' }], m: 'AB', fb: ['good', 'Confirmar por otro canal', 'Nadie sabe bien a qué se dedica Sam. Esa duda basta para no seguir.'], end: 1 },
       { t: 'Contarle a mamá antes de responder', do: [{ tell: 'mama', text: 'Ma, Sam, uno del barrio, me ofrece chamba en otra ciudad con cuarto y comida. ¿Qué dices?' }], m: 'AB', fb: ['good', 'Cuenta la duda', 'Contarlo antes de responder te da otra mirada sobre la oferta.'], end: 1 },
-      { say: 'gracias, no me interesa', a: ['corta'], m: 'AB', fb: ['good', 'No tienes que dar explicaciones', 'Una respuesta corta es suficiente.'], end: 1 }] },
+      { say: 'gracias, no me interesa', a: ['corta'], m: 'AB', fb: ['good', 'No tienes que dar explicaciones', 'Una respuesta corta es suficiente.'], next: 'n1x' }] },
+    n1x: { m: 'AB', push: 1, msgs: [
+      { sys: 'Unos días después' },
+      ['Hola, ¿lo pensaste? Otra chica del barrio ya se animó, se va el sábado.', 'confianza', 'apura'],
+      'Tranquila, sin presión.'], opts: [
+      { say: 'no, gracias. ya te dije', a: ['corta'], hold: 1, fb: ['good', 'Sostuviste tu no', 'Que otra persona vaya no hace segura la oferta. Usar a alguien conocido es para que confíes.'], end: 1 },
+      { say: 'en serio? quién se va?', a: ['sigue'], fb: ['note', 'Otra persona no comprueba nada', 'Que otra chica vaya no comprueba nada. Puede estar en el mismo riesgo.'], reply: [['La hija de la señora de la esquina. Si quieres van juntas.', 'confianza']], next: 'n2' },
+      { t: 'Contarle a mamá', do: [{ tell: 'mama', text: 'Ma, Sam me sigue escribiendo por una chamba en otra ciudad. Dice que otra chica del barrio ya se va.' }], fb: ['good', 'Cuenta la duda', 'Contarlo te da otra mirada, y quizá alguien pueda avisarle a la otra chica.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     n2: { m: 'B', pausa: 1, msgs: [
       ['Te pagan el pasaje de ida y te mando S/ 50 de recarga para tus datos.', 'deuda', 'norevisa'],
       { pay: 'S/ 50', from: 'Sam', label: 'Recarga', s: ['deuda'] },
       ['Allá te recogen en el terminal, no necesitas llevar nada.', 'lugar'],
       ['Mejor no lo comentes en tu casa, hay varias personas interesadas.', 'aisla']], opts: [
       { say: 'graciaas! cuándo salgo?', a: ['sigue'], fb: ['alert', 'Te deja en deuda', 'Pasaje, recargas y movilidad parecen ayuda, pero pueden volverse deuda. ¿Y el pasaje de vuelta? Un pasaje solo de ida es una oferta que no cuadra. Pedirte que no lo comentes en casa busca que nadie sepa adónde vas.', 'deuda'], next: 'n3' },
-      { say: 'y la vuelta quién la paga? dónde es exactamente? y si no me gusta?', a: ['pregunta'], spot: ['deuda', 'lugar'], fb: ['good', 'Antes de ir, pregunta', '¿Dónde exactamente?, ¿con quién?, ¿quién más va?, ¿quién paga el pasaje y qué pasa si no me gusta? Fíjate en la respuesta.'], reply: [['Si trabajas bien, no vas a querer volver.', 'norevisa'], ['Y el pasaje ya está pagado, no lo desperdicies.', 'deuda']], next: 'n2b' },
+      { say: 'acepto la recarga, pero lo pienso', a: ['sigue'], fb: ['alert', 'Te deja en deuda', 'Aceptar «solo la recarga» ya crea algo que te pueden cobrar.', 'deuda'], reply: [['Normal, piénsalo. Igual ya te mandé, eh.', 'deuda']], next: 'n2b' },
+      { say: 'y la vuelta quién la paga? y si no me va?', a: ['pregunta'], spot: ['deuda', 'lugar'], fb: ['good', 'Antes de ir, pregunta', '¿Dónde exactamente?, ¿con quién?, ¿quién más va?, ¿quién paga el pasaje y qué pasa si no me gusta? Fíjate en la respuesta.'], reply: [['Si trabajas bien, no vas a querer volver.', 'norevisa'], ['Y el pasaje ya está pagado, no lo desperdicies.', 'deuda']], next: 'n2b' },
       { say: 'prefiero pagar mi pasaje e ir con alguien', a: ['pregunta'], spot: ['deuda', 'aisla'], fb: ['note', 'Poner tus condiciones', 'Fíjate en la respuesta: si no acepta que vayas con alguien o con tu dinero, es una señal.'], reply: [['No se puede, solo hay cuarto para una persona.', 'aisla']], next: 'n2b' },
-      { say: 'me pasas el contrato y la dirección por escrito?', a: ['verifica'], spot: ['norevisa'], fb: ['good', 'Trabajo digno', 'Un trabajo digno tiene contrato, horario, una paga acorde y una dirección que puedes comprobar.'], reply: [['Allá firmas todo, no te preocupes.', 'norevisa']], next: 'n2b' },
+      { say: 'me pasas el contrato y la dirección?', a: ['verifica'], spot: ['norevisa'], fb: ['good', 'Trabajo digno', 'Un trabajo digno tiene contrato, horario, una paga acorde y una dirección que puedes comprobar.'], reply: [['Allá firmas todo, no te preocupes.', 'norevisa']], next: 'n2b' },
       { t: 'Mandarle el chat a mamá', do: ['captura', { tell: 'mama', reply: ['Llamé a ese número y nadie me da la dirección del negocio.', 'No vas a ir sin saber adónde.'] }], fb: ['good', 'Cuenta la duda, no solo el plan', 'La otra persona llama al número y nadie le da la dirección del negocio. Decides no ir.'], end: 1 },
-      { t: '«Mejor no, gracias» y rechazar todo', say: 'mejor no, gracias. no necesito el pasaje ni la recarga', a: ['corta'], fb: ['good', 'Los regalos no obligan', 'Un adelanto crea una deuda. Rechazarlo es tu derecho, aunque pierdas la «oportunidad».'], end: 1 }] },
-    n2b: { m: 'B', msgs: [], opts: [
+      { say: 'mejor no, gracias. no necesito nada', a: ['corta'], fb: ['good', 'Los regalos no obligan', 'Un adelanto crea una deuda. Rechazarlo es tu derecho, aunque pierdas la «oportunidad».'], reply: [['Ya te mandé la recarga, no me hagas quedar mal con mi familiar.', 'deuda', 'apura']], next: 'n2b' }] },
+    n2b: { m: 'B', push: 1, msgs: [], opts: [
       { say: 'bueno, voy igual', a: ['sigue'], m: 'BC', fb: ['alert', 'Te aísla', 'Ir sin compañía, sin dinero propio y sin pasaje de vuelta te deja sin forma de volver. Comparte siempre adónde vas.', 'aisla'], next: 'n3' },
-      { say: 'entonces no voy', a: ['corta'], m: 'BC', fb: ['good', 'Tus condiciones te protegieron', 'Cuando una oferta no acepta tus condiciones, cortar es una buena salida.'], end: 1 },
-      { t: 'Pasarle a mamá el número de Sam', do: [{ tell: 'mama', text: 'Ma, Sam me consiguió chamba en otra ciudad. Su número es +51 900 000 406. Me recogen en el terminal.', reply: ['¿Y la vuelta? ¿Y la dirección?', 'Así no vas. Mañana hablamos con calma.'] }], m: 'BC', fb: ['good', 'Alguien sabe adónde vas', 'Con esos datos, otra persona puede ayudarte a revisar y a buscarte si hace falta.'], end: 1 }] },
+      { say: 'entonces no voy', a: ['corta'], hold: 1, m: 'BC', fb: ['good', 'Tus condiciones te protegieron', 'Cuando una oferta no acepta tus condiciones, cortar es una buena salida.'], end: 1 },
+      { t: 'Pasarle a mamá el número de Sam', do: [{ tell: 'mama', text: 'Ma, Sam me consiguió chamba en otra ciudad. Su número es +51 900 000 406. Me recogen en el terminal.', reply: ['¿Y la vuelta? ¿Y la dirección?', 'Así no vas. Mañana hablamos con calma.'] }], m: 'BC', fb: ['good', 'Alguien sabe adónde vas', 'Con esos datos, otra persona puede ayudarte a revisar y a buscarte si hace falta.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], m: 'BC', fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     n3: { m: 'C', pausa: 1, msgs: [
       { sys: 'Una semana después, en otra ciudad' },
       'Ya llegaste. La persona encargada te está esperando.',
       ['Dale tu DNI para que lo guarde, es por seguridad.', 'pide'],
       ['El pasaje y la comida se descuentan de tu sueldo.', 'deuda']], opts: [
       { t: 'Darle mi DNI', do: [{ sys: 'Entregaste tu DNI.' }], a: ['sigue'], harm: 1, m: 'D', fb: ['alert', 'Retener tu documento es una forma de control', 'La trata no siempre es encierro: se puede tener celular, volver a casa y aun así estar bajo explotación. Aceptar la oferta no quita que lo sea. Nunca es tarde para pedir ayuda.', 'pide'], end: 1 },
-      { t: '«No voy a dar mi DNI» y preguntar a vecinos', say: 'no voy a dar mi DNI', do: [{ verifica: 'Preguntaste en la bodega de la esquina. Nadie conoce un negocio de comida con ese nombre.' }], a: ['corta'], m: 'CD', fb: ['good', 'Comprobar en el lugar', 'Preguntar en el lugar puede mostrar que el negocio no es lo que dijeron.'], end: 1 },
+      { t: 'No dar el DNI y preguntar en la bodega', say: 'no voy a dar mi DNI', do: [{ verifica: 'Preguntaste en la bodega de la esquina. Nadie conoce un negocio de comida con ese nombre.' }], a: ['corta'], m: 'CD', fb: ['good', 'Comprobar en el lugar', 'Preguntar en el lugar puede mostrar que el negocio no es lo que dijeron.'], end: 1 },
       { t: 'Mandarle mi ubicación a mamá', do: [{ tell: 'mama', text: 'Ma, esto no es lo que dijeron. Te mando mi ubicación.', reply: ['Quédate donde haya gente y no entregues nada.', 'Ya estoy llamando a la Línea 100.'] }], m: 'CD', fb: ['good', 'Pediste ayuda desde el lugar', 'Pedir ayuda funciona aunque ya estés ahí.'], end: 1 },
       { t: 'Llamar al 105 de la Policía', do: [{ call: '105' }], m: 'CD', fb: ['good', 'Hay a quién acudir', 'Si estás en peligro, el 105 de la Policía atiende las 24 horas. La Línea 100 también te orienta. Después, la Línea 1818 recibe denuncias de trata de forma anónima.'], end: 1 },
       { t: 'Quedarme a pagar lo que debo', do: [{ sys: 'Te quedaste.' }], a: ['sigue'], harm: 1, m: 'D', fb: ['alert', 'Una deuda inventada es una forma de retenerte', 'No aceptes deudas que no conocías ni firmaste. Hay deudas de miles de soles por cuarto y comida, y multas por salir o por tener pareja. Perder el pasaje o la «oportunidad» es mejor que quedarte. Puedes irte en cualquier momento.', 'deuda'], end: 1 }] }
@@ -826,9 +884,10 @@ SIM.addCase({
 /* Case «Kevin_FF»: a player gives diamonds in the game chat, moves to
  * WhatsApp, asks for a secret photo and a meeting with his «cousin» in a car.
  * Adapted from v0.1.1 case 03_freefire to the v4 node schema. Feedback texts
- * are new and follow the v4 wording; they need team review. */
+ * are new and follow the v4 wording; they need team review. v6 (2026-11-02)
+ * adds middle options and pushback nodes (a1x, b2, bc1x). */
 SIM.addCase({
-  id: 'freefire', app: 'game', order: 4,
+  id: 'freefire', app: 'game', order: 4, v6: 1,
   name: 'Kevin_FF', initials: 'K', bg: '#7a4e9c', time: '20:55',
   preview: 'buena partida jaja, eres buena',
   profile: ['Kevin_FF · Nivel 52', 'Región Sudamérica', 'Se unió hace 2 meses', 'Dice tener 17 años'],
@@ -845,21 +904,31 @@ SIM.addCase({
       'buena partida jaja, eres buena',
       ['te regalo diamantes si mañana jugamos dúo', 'deuda', 'confianza']], opts: [
       { say: 'jaja ya, dale', a: ['sigue'], m: 'AB', fb: ['alert', 'Te deja en deuda', 'Un regalo de alguien que no conoces parece buena onda, pero crea la sensación de que le debes algo. Que juegue bien o sea amable no lo hace seguro.', 'deuda'], next: 'ab1' },
-      { say: '¿cuántos años tienes?', a: ['pregunta'], m: 'AB', fb: ['note', 'Preguntar está bien', 'Cualquiera puede decir una edad en un juego. Fíjate en lo que hace después, no solo en lo que dice.'], next: 'ab2' },
-      { say: 'gracias, pero no acepto regalos', a: ['corta'], m: 'AB', fb: ['good', 'Los regalos no obligan', 'Rechazar un regalo es tu derecho. Puedes seguir jugando sin deberle nada a nadie.'], end: 1 },
-      { t: 'Reportar y bloquear', do: ['reporta', 'bloquea'], m: 'AB', fb: ['good', 'Cortaste al primer mensaje', 'Los juegos también tienen botón de reportar. Reportar ayuda a que no le escriba a otra persona.'], end: 1 }] },
+      { say: '¿cuántos años tienes?', a: ['pregunta'], m: 'AB', fb: ['care', 'Preguntar está bien', 'Cualquiera puede decir una edad en un juego. Fíjate en lo que hace después, no solo en lo que dice.'], next: 'ab2' },
+      { say: 'jaja gracias, pero juguemos sin regalos', a: ['pregunta'], spot: ['deuda'], m: 'AB', fb: ['care', 'Jugar sin deber nada', 'Jugar no es el problema. Fíjate si respeta que no quieres regalos.'], reply: [['jaja ya, igual te mando, es un regalo nomás', 'deuda']], next: 'ab1' },
+      { say: 'gracias, pero no acepto regalos', a: ['corta'], m: 'AB', fb: ['good', 'Los regalos no obligan', 'Rechazar un regalo es tu derecho. Puedes seguir jugando sin deberle nada a nadie.'], next: 'a1x' },
+      { t: 'Reportarlo en el juego', do: ['reporta', 'bloquea'], m: 'AB', fb: ['good', 'Cortaste al primer mensaje', 'Los juegos también tienen botón de reportar. Reportar ayuda a que no le escriba a otra persona.'], end: 1 }] },
+    a1x: { m: 'AB', push: 1, msgs: [
+      'uy qué seria jaja',
+      ['ya pues, solo es un regalo. pásame tu WhatsApp y jugamos tranqui', 'aisla']], opts: [
+      { say: 'no, gracias', a: ['corta'], hold: 1, fb: ['good', 'Sostuviste tu no', 'No le debes tu número a nadie por ser buena onda contigo.'], end: 1 },
+      { say: 'ya ya, toma mi número', a: ['sigue'], app: 'whatsapp', m: 'B', fb: ['alert', 'Te aísla: pasar a lo privado', 'Salir del juego a WhatsApp saca la conversación de la vista de otras personas y le da tu número.', 'aisla'], next: 'b1' },
+      { t: 'Reportarlo en el juego', do: ['reporta', 'bloquea'], fb: ['good', 'Reportar también protege', 'Los juegos también tienen botón de reportar. Reportar ayuda a que no le escriba a otra persona.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     ab1: { m: 'AB', msgs: [
       { gift: 'Kevin_FF te envió 100 diamantes', s: ['deuda'] },
       'ya te mandé, para que veas que soy buena gente',
       ['pásame tu WhatsApp pa coordinar, el chat del juego es feo', 'aisla']], opts: [
       { say: 'ya, te paso mi número', a: ['sigue'], app: 'whatsapp', m: 'B', fb: ['alert', 'Te aísla: pasar a lo privado', 'Salir del juego a WhatsApp saca la conversación de la vista de otras personas y le da tu número. Primero un regalo, después el privado: así se arma la confianza.', 'aisla'], next: 'b1' },
+      { say: 'te paso mi Insta nomás', a: ['sigue'], app: 'instagram', m: 'B', fb: ['note', 'Igual es un chat privado', 'Pasarle tu Instagram parece menos que tu número, pero igual sale del juego a un chat privado. En tu perfil puede ver tus fotos, tu colegio y a tus amistades.'], next: 'b1' },
       { say: 'prefiero no, chau', a: ['corta'], fb: ['good', 'Una respuesta corta basta', 'No tienes que explicar por qué. Aunque ya aceptaste los diamantes, no le debes tu número.'], end: 1 },
       { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Mostrar la captura es más fácil que explicarlo todo. Contar no te obliga a nada.'], end: 1 }] },
     ab2: { m: 'AB', msgs: [
-      ['tengo 17 como tú jaja', 'confianza'],
+      ['tengo 17 jaja, ¿y tú?', 'confianza'],
       { gift: 'Kevin_FF te envió 100 diamantes', s: ['deuda'] },
       ['pásame tu WhatsApp pa coordinar, el chat del juego es feo', 'aisla']], opts: [
       { say: 'ya, te paso mi número', a: ['sigue'], app: 'whatsapp', m: 'B', fb: ['alert', 'Te aísla: pasar a lo privado', 'Que diga tener tu edad no se puede comprobar. Salir del juego a WhatsApp saca la conversación de la vista de otras personas y le da tu número.', 'aisla'], next: 'b1' },
+      { say: 'te paso mi Insta nomás', a: ['sigue'], app: 'instagram', m: 'B', fb: ['note', 'Igual es un chat privado', 'Pasarle tu Instagram parece menos que tu número, pero igual sale del juego a un chat privado. En tu perfil puede ver tus fotos, tu colegio y a tus amistades.'], next: 'b1' },
       { say: 'prefiero no, chau', a: ['corta'], fb: ['good', 'Una respuesta corta basta', 'No tienes que explicar por qué. Aunque ya aceptaste los diamantes, no le debes tu número.'], end: 1 },
       { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Mostrar la captura es más fácil que explicarlo todo. Contar no te obliga a nada.'], end: 1 }] },
     b1: { m: 'B', pausa: 1, msgs: [
@@ -867,21 +936,29 @@ SIM.addCase({
       ['eres la más linda del server, en serio', 'confianza'],
       ['mándame una foto tuya, pero solo para mí. no le digas a nadie', 'pide', 'aisla']], opts: [
       { t: 'Mandarle una foto', say: 'ya, te mando una', do: [{ photos: 1 }], a: ['sigue'], m: 'BC', fb: ['alert', 'La primera foto es el umbral', 'No mandes ni una. Empieza suave y va subiendo, y lo que envías puede usarse después para presionarte. Pedir que no le digas a nadie es otra señal.', 'pide'], next: 'bc1' },
-      { say: '¿por qué tiene que ser secreto?', a: ['pregunta'], spot: ['aisla'], fb: ['note', 'La pregunta incómoda', 'Nadie que te quiere bien te pide secretos. Fíjate en cómo responde.'], reply: [['es que tus papás no entenderían lo nuestro', 'aisla'], ['si no me mandas voy a pensar que no me quieres, después de todo lo que te regalé', 'apura', 'deuda']], next: 'b2' },
-      { t: '«No voy a mandar nada» + capturar, reportar, bloquear', say: 'no voy a mandar nada', do: ['captura', 'reporta', 'bloquea'], a: ['corta'], fb: ['good', 'Cierre seguro', 'Guardaste pruebas antes de bloquear y protegiste a otras personas.'], end: 1 },
+      { say: '¿por qué tiene que ser secreto?', a: ['pregunta'], spot: ['aisla'], fb: ['care', 'La pregunta incómoda', 'Nadie que te quiere bien te pide secretos. Fíjate en cómo responde.'], reply: [['es que tus papás no entenderían lo nuestro', 'aisla'], ['si no me mandas voy a pensar que no me quieres, después de todo lo que te regalé', 'apura', 'deuda']], next: 'b2' },
+      { say: 'jaja no, mejor juguemos', a: ['pregunta'], fb: ['care', 'Cambiar de tema', 'Cambiar de tema es una forma de decir que no. Fíjate si insiste.'], reply: [['ya pues, una nomás. después de todo lo que te regalé', 'apura', 'deuda']], next: 'b2' },
+      { say: 'no voy a mandar nada', a: ['corta'], fb: ['good', 'Decir que no basta', 'No tienes que explicar por qué. Fíjate qué hace después de tu no.'], reply: [['ya pues, una nomás. después de todo lo que te regalé', 'apura', 'deuda']], next: 'b2' },
       { t: 'Mostrarle la captura a mamá', do: ['captura', { tell: 'mama' }], fb: ['good', 'Esto es abuso y se denuncia', 'Si eres menor de edad y una persona adulta te pide fotos, es abuso. Una persona adulta de confianza puede ayudarte a reportar y denunciar.'], end: 1 }] },
-    b2: { m: 'B', msgs: [], opts: [
+    b2: { m: 'B', push: 1, msgs: [], opts: [
       { t: 'Mandarle la foto', say: 'ya, te mando', do: [{ photos: 1 }], a: ['sigue'], m: 'BC', fb: ['alert', 'Te apura o presiona', 'La culpa y los regalos se vuelven presión: «después de todo lo que te regalé». No le debes nada por unos diamantes.', 'apura'], next: 'bc1' },
-      { say: 'no me gusta cómo me hablas', a: ['corta'], fb: ['good', 'Tu incomodidad cuenta', 'No necesitas más pruebas para cortar. Puedes sumar captura, reporte y bloqueo.'], end: 1 },
-      { t: 'Capturar, bloquear y contarle a Kim', do: ['captura', 'bloquea', { tell: 'kim' }], fb: ['good', 'Cerraste con apoyo', 'Capturaste antes de bloquear y alguien lo sabe. Si vuelve a escribir desde otra cuenta, no lo cargas sin apoyo.'], end: 1 }] },
+      { say: 'no me gusta cómo me hablas', a: ['corta'], hold: 1, fb: ['good', 'Tu incomodidad cuenta', 'No necesitas más pruebas para cortar. Puedes sumar captura, reporte y bloqueo.'], end: 1 },
+      { t: 'Contarle a Kim', do: ['captura', 'bloquea', { tell: 'kim' }], fb: ['good', 'Cerraste con apoyo', 'Capturaste antes de bloquear y alguien lo sabe. Si vuelve a escribir desde otra cuenta, no lo cargas sin apoyo.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     bc1: { m: 'BC', pausa: 1, msgs: [
       'estás bien linda',
       ['vamos a vernos el sábado. te recojo en la plaza, mi primo tiene carro', 'lugar', 'aisla'],
       ['no le digas a nadie, es nuestra sorpresa', 'aisla']], opts: [
       { say: 'ya, ahí nos vemos', a: ['sigue'], m: 'C', fb: ['alert', 'Te quiere llevar a un lugar', 'Un «primo» con carro es otra persona adulta en el encuentro. Si nadie sabe adónde vas, nadie puede buscarte.', 'lugar'], next: 'c1' },
-      { say: 'no voy a ir', a: ['corta'], fb: ['good', 'Ya tenías tu respuesta', 'Un «primo» con carro es otra persona adulta en el encuentro. No ir es la mejor decisión.'], end: 1 },
+      { say: 'voy, pero con mi amiga', a: ['pregunta'], spot: ['aisla'], fb: ['care', 'Ir con alguien', 'Ir con alguien es parte de un plan de salida. Si no aceptan compañía, ya es una señal.'], reply: [['no, mi primo dice que solo tú, no hay sitio', 'aisla']], next: 'bc1x' },
+      { say: 'no voy a ir', a: ['corta'], fb: ['good', 'Ya tenías tu respuesta', 'Un «primo» con carro es otra persona adulta en el encuentro. No ir es la mejor decisión.'], reply: [['ya pues, después de todo lo que hice por ti?', 'apura', 'deuda']], next: 'bc1x' },
       { t: 'Contarle a mamá adónde me cita', do: [{ tell: 'mama', text: 'Ma, un chico del juego quiere verme el sábado en la plaza. Viene con su primo en carro.', reply: ['¿Un chico del juego con un primo con carro? Eso no cuadra.', 'No vas a ir. Guarda el chat y lo reportamos.'] }], fb: ['good', 'Cuenta la duda, no solo el plan', 'Con esos datos, otra persona puede ayudarte a ver lo que no cuadra.'], end: 1 },
-      { t: 'Capturar, reportar, bloquear y contarle a mamá', do: ['captura', 'reporta', 'bloquea', { tell: 'mama' }], fb: ['good', 'Cierre seguro completo', 'Captura, reporta y bloquea, en ese orden. Y alguien lo sabe.'], end: 1 }] },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas y reportas antes, proteges a otras personas.'], end: 1 }] },
+    bc1x: { m: 'BC', push: 1, msgs: [], opts: [
+      { say: 'no voy a ir', a: ['corta'], hold: 1, fb: ['good', 'Sostuviste tu no', 'Que te haga sentir en deuda no cambia la respuesta.'], end: 1 },
+      { say: 'ya, voy sola', a: ['sigue'], m: 'C', fb: ['alert', 'Te quiere llevar a un lugar', 'Un «primo» con carro es otra persona adulta en el encuentro. Si nadie sabe adónde vas, nadie puede buscarte.', 'lugar'], next: 'c1' },
+      { t: 'Contarle a mamá', do: [{ tell: 'mama', text: 'Ma, un chico del juego quiere verme el sábado en la plaza. Viene con su primo en carro y no quiere que vaya nadie más.', reply: ['Eso no cuadra. No vas a ir.', 'Guarda el chat y lo reportamos.'] }], fb: ['good', 'Cuenta la duda, no solo el plan', 'Con esos datos, otra persona puede ayudarte a ver lo que no cuadra.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     c1: { m: 'CD', msgs: [
       { sys: 'Sábado, en la plaza' },
       ['ya estamos aquí, es el carro gris', 'lugar'],
@@ -897,9 +974,10 @@ SIM.addCase({
 /* Case «Gana con Yape»: a Telegram channel promises money for likes, asks
  * to pay to enter, then moves to «modelaje» and a private admin. Adapted
  * from v0.1.1 case 08_yape to the v4 node schema. Feedback texts are new and
- * follow the v4 wording; they need team review. */
+ * follow the v4 wording; they need team review. v6 (2026-11-02) adds middle
+ * options and pushback nodes (ab1x, b2, bc1x). */
 SIM.addCase({
-  id: 'yape', app: 'telegram', order: 5, avisa: 1,
+  id: 'yape', app: 'telegram', order: 5, avisa: 1, v6: 1,
   name: 'Gana con Yape · Oficial', initials: 'GY', bg: '#4a5a7d', time: 'dom',
   preview: 'Gana S/ 400 diarios desde tu celular',
   group: '2,341 suscriptores',
@@ -915,8 +993,9 @@ SIM.addCase({
       ['Gana S/ 400 diarios desde tu celular', 'promete'],
       ['Solo das likes y ves videos. Para entrar al grupo VIP yapeas S/ 10', 'deuda', 'norevisa'],
       ['Cupos hasta hoy a las 12', 'apura']], opts: [
-      { t: 'Yapear S/ 10 para entrar', do: [{ payOut: 'S/ 10' }], a: ['sigue'], m: 'AB', fb: ['alert', 'Pagar para entrar', 'Si tienes que pagar para entrar, el negocio eres tú. S/ 400 al día por dar likes no existe: es el gancho.', 'deuda'], next: 'ab2' },
-      { t: 'Preguntar si es real', say: 'cómo sé que no es estafa?', a: ['pregunta'], spot: ['promete'], m: 'AB', fb: ['note', 'Preguntar está bien', 'Fíjate en la respuesta: si te muestran «pruebas» que no puedes comprobar, ya tienes tu respuesta.'], next: 'ab1' },
+      { t: 'Yapear S/ 10 para entrar', do: [{ payOut: 'S/ 10' }], a: ['sigue'], m: 'AB', fb: ['alert', 'Pagar para entrar', 'Si te cobran por entrar, desconfía: un trabajo te paga a ti. S/ 400 al día por dar likes no existe: es el gancho.', 'deuda'], next: 'ab2' },
+      { t: 'Preguntar si es real', say: 'cómo sé que no es estafa?', a: ['pregunta'], spot: ['promete'], m: 'AB', fb: ['care', 'Preguntar está bien', 'Fíjate en la respuesta: si te muestran «pruebas» que no puedes comprobar, ya tienes tu respuesta.'], next: 'ab1' },
+      { t: 'Quedarme a mirar sin yapear', a: ['sigue'], m: 'AB', fb: ['care', 'Mirar sin pagar', 'Mirar sin pagar no te cuesta plata, pero el canal está hecho para que te animes. Fíjate en lo que piden después.'], next: 'ab1' },
       { t: 'Salir del canal', do: ['salir'], m: 'AB', fb: ['good', 'Cortaste al primer mensaje', 'Si es demasiado bueno y urgente, no es para ti. Puedes reportar el canal antes de salir.'], end: 1 },
       { t: 'Reportar el canal y salir', do: ['reporta', 'salir'], m: 'AB', fb: ['good', 'Reportar protege a otras personas', 'Saliste y avisaste a la plataforma. Así le llega a menos gente.'], end: 1 }] },
     ab1: { m: 'AB', msgs: [
@@ -924,7 +1003,13 @@ SIM.addCase({
       { photo: 'Captura de un Yape de S/ 400', s: ['norevisa'] },
       ['100% real, sin riesgo', 'promete']], opts: [
       { t: 'Yapear S/ 10', do: [{ payOut: 'S/ 10' }], a: ['sigue'], fb: ['alert', 'No se puede revisar', 'Las capturas de pago se pueden editar o inventar. Que otras personas «ya cobraron» no comprueba nada.', 'norevisa'], next: 'ab2' },
-      { t: '«Eso se puede editar» y salir', say: 'esas capturas se pueden editar. no gracias', do: ['salir'], spot: ['norevisa'], fb: ['good', 'Una captura no es una prueba', 'Saliste antes de poner plata. Puedes reportar el canal.'], end: 1 },
+      { say: 'esas capturas se pueden editar', a: ['pregunta'], spot: ['norevisa'], fb: ['good', 'Una captura no es una prueba', 'Las capturas de pago se pueden editar o inventar. Fíjate qué responden.'], next: 'ab1x' },
+      { t: 'Esperar a ver si alguien más cobra', a: ['sigue'], fb: ['care', 'Esperar no compromete', 'Esperar no compromete. Igual, quienes «cobran» en estos grupos suelen ser parte del canal.'], next: 'ab1x' },
+      { t: 'Preguntarle a mamá', do: ['captura', { tell: 'mama' }], fb: ['good', 'Decide con apoyo', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 }] },
+    ab1x: { m: 'AB', push: 1, msgs: [
+      ['Si no confías, no es para ti. Los cupos se acaban hoy', 'apura']], opts: [
+      { t: 'Salir del canal', do: ['salir'], hold: 1, fb: ['good', 'Sostuviste tu no', 'El apuro es el gancho. Un cupo que se acaba hoy no te deja pensar.'], end: 1 },
+      { t: 'Yapear los S/ 10', do: [{ payOut: 'S/ 10' }], a: ['sigue'], fb: ['alert', 'Te apura o presiona', '«Los cupos se acaban hoy» busca que pagues sin pensarlo. S/ 400 al día por dar likes no existe.', 'apura'], next: 'ab2' },
       { t: 'Preguntarle a mamá', do: ['captura', { tell: 'mama' }], fb: ['good', 'Decide con apoyo', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 }] },
     ab2: { m: 'B', chat: { name: 'VIP Gana Ya', initials: 'VG', bg: '#2e8b57', sub: '87 miembros' }, msgs: [
       { sys: 'Te agregaron al grupo «VIP Gana Ya»' },
@@ -933,32 +1018,42 @@ SIM.addCase({
       { pay: 'S/ 15', from: 'Gana Ya', s: ['deuda'] },
       { from: 'Admin Caro', t: '¿Ves? Sí pagamos', s: ['confianza', 'deuda'] }], opts: [
       { say: 'bacán! qué sigue?', a: ['sigue'], m: 'B', fb: ['alert', 'Te deja en deuda', 'Te devuelven un poquito para que confíes y pongas más. Así empiezan muchas estafas en cadena.', 'deuda'], next: 'b1' },
+      { say: 'me quedo, pero no pongo más', a: ['sigue'], fb: ['care', 'Sin poner más plata', 'Quedarte sin poner más plata te deja mirar, pero el grupo está hecho para pedirte más. Fíjate en lo que viene.'], next: 'b1' },
       { t: 'Salirme del grupo', do: ['salir'], fb: ['good', 'Perder S/ 10 es mejor que seguir', 'Salir aunque pierdas lo que pusiste es una buena salida. Puedes reportar el grupo.'], end: 1 },
-      { t: 'Capturar, reportar el grupo y salir', do: ['captura', 'reporta', 'salir'], fb: ['good', 'Cierre seguro', 'Guardaste pruebas y protegiste a otras personas.'], end: 1 }] },
+      { t: 'Reportar el grupo y salir', do: ['captura', 'reporta', 'salir'], fb: ['good', 'Cierre seguro', 'Guardaste pruebas y protegiste a otras personas.'], end: 1 }] },
     b1: { m: 'B', pausa: 1, msgs: [
       { from: 'Admin Caro', t: 'Para el nivel 2 yapeas S/ 50 y ganas el triple', s: ['pide', 'deuda'] },
       { from: 'Admin Caro', t: 'Si no tienes plata, hay tareas de modelaje: fotos y videos en vivo. Se gana más', s: ['pide', 'promete'] }], opts: [
       { say: 'no tengo plata, cómo es lo de modelaje?', a: ['sigue'], m: 'BC', fb: ['alert', 'Te pide cada vez más', 'Primero dinero, ahora fotos y videos. Dar likes y hacer «modelaje» en vivo no tienen nada que ver: es otra cosa.', 'pide'], next: 'bc1' },
-      { say: 'y por qué ahora tengo que pagar más?', a: ['pregunta'], spot: ['pide'], fb: ['note', 'La pregunta incómoda', 'Fíjate en la respuesta: si te asustan con perder lo que pusiste, es presión.'], reply: [{ from: 'Admin Caro', t: 'Así funciona, quien invierte gana', s: ['promete'] }, { from: 'Admin Caro', t: 'Si te sales pierdes lo que ya pusiste', s: ['apura'] }], next: 'b2' },
+      { say: 'y por qué ahora tengo que pagar más?', a: ['pregunta'], spot: ['pide'], fb: ['care', 'La pregunta incómoda', 'Fíjate en la respuesta: si te asustan con perder lo que pusiste, es presión.'], reply: [{ from: 'Admin Caro', t: 'Así funciona, quien invierte gana', s: ['promete'] }, { from: 'Admin Caro', t: 'Si te sales pierdes lo que ya pusiste', s: ['apura'] }], next: 'b2' },
+      { say: 'solo sigo con los likes', a: ['sigue'], fb: ['care', 'El grupo no se queda ahí', 'Quedarte en lo de los likes parece seguro, pero ya te pidieron más plata y fotos. El grupo no va a quedarse ahí.'], reply: [{ from: 'Admin Caro', t: 'Los likes ya no pagan, ahora es nivel 2 o modelaje', s: ['pide'] }], next: 'b2' },
       { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'Mostrar la captura basta para empezar. La otra persona puede ver lo que no cuadra.'], end: 1 },
       { t: 'Reportar el grupo y salir', do: ['reporta', 'salir'], fb: ['good', 'Saliste a tiempo', 'Salir aunque pierdas lo que pusiste es mejor que seguir pagando.'], end: 1 }] },
-    b2: { m: 'B', msgs: [], opts: [
+    b2: { m: 'B', push: 1, msgs: [], opts: [
       { say: 'ok, y lo de modelaje?', a: ['sigue'], m: 'BC', fb: ['alert', 'Te apura o presiona', '«Si te sales pierdes lo que pusiste» busca que sigas por miedo. Perder S/ 10 es mejor que perder más plata o tu seguridad.', 'apura'], next: 'bc1' },
-      { t: '«Prefiero perder S/ 10» y salir', say: 'prefiero perder S/ 10. me salgo', do: ['salir'], fb: ['good', 'Perder algo es mejor que seguir', 'Saliste aunque perdías lo que pusiste. Puedes reportar el grupo.'], end: 1 }] },
+      { say: 'prefiero perder S/ 10. me salgo', do: ['salir'], hold: 1, fb: ['good', 'Perder algo es mejor que seguir', 'Saliste aunque perdías lo que pusiste. Puedes reportar el grupo.'], end: 1 },
+      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La otra persona puede ver lo que no cuadra.'], end: 1 }] },
     bc1: { m: 'BC', pausa: 1, chat: { name: 'Admin Caro', initials: 'AC', bg: '#8e5bb5', sub: 'últ. vez hace poco' }, msgs: [
       { sys: 'Admin Caro te escribió por privado' },
       ['Hola, soy Caro. Para modelaje pásame fotos en ropa ligera y tu edad', 'pide'],
       ['Si eres menor no pasa nada, nadie se entera', 'aisla'],
       ['Si te va bien, te llevamos a un estudio en la ciudad', 'lugar']], opts: [
       { t: 'Mandarle las fotos', say: 'ya, te paso', do: [{ photos: 2 }], a: ['sigue'], m: 'C', fb: ['alert', 'Te quiere llevar a un lugar', 'Un «estudio» que no conoces es un encuentro en persona con gente desconocida. Que les dé igual que seas menor es una señal muy fuerte. No es tu culpa.', 'lugar'], next: 'c1' },
-      { t: '«No voy a mandar nada» y bloquear', say: 'no voy a mandar nada', do: ['bloquea'], a: ['corta'], fb: ['good', 'Una respuesta corta basta', 'No necesitas explicar ni tener pruebas. Si antes capturas y reportas, proteges a otras personas.'], end: 1 },
-      { t: 'Capturar, reportar y contarle a mamá', do: ['captura', 'reporta', { tell: 'mama', text: 'Ma, en un grupo de Telegram me piden fotos en ropa ligera y mi edad.', reply: ['Gracias por contarme. Eso es abuso y se denuncia.', 'Guarda todo. Mañana llamamos a la 1818.'] }], fb: ['good', 'Esto se denuncia', 'Pedir fotos a menores de edad es abuso. Con las capturas, una persona adulta puede ayudarte a denunciar en la Línea 1818.'], end: 1 },
+      { say: 'mando de cara nomás, normal', do: [{ photos: 1 }], a: ['sigue'], fb: ['alert', 'Te pide cada vez más', 'Empieza con algo que parece normal y después pide más. Lo que envías puede usarse para presionarte.', 'pide'], reply: [['Así no sirve. Tienen que ser en ropa ligera, si no no hay pago', 'pide']], next: 'bc1x' },
+      { say: 'y para qué quieren mi edad?', a: ['pregunta'], spot: ['aisla'], fb: ['care', 'Lo que buscan', 'Preguntar para qué te piden tu edad muestra lo que buscan. Si no les importa que seas menor, ya tienes tu respuesta.'], reply: [['Para el registro nomás. Igual no importa, nadie se entera', 'aisla']], next: 'bc1x' },
+      { say: 'no voy a mandar nada', a: ['corta'], fb: ['good', 'Decir que no basta', 'No necesitas explicar ni tener pruebas. Fíjate qué hace después de tu no.'], reply: [['Ok, pero ya estás registrada. Si te sales igual pierdes lo que pusiste', 'apura']], next: 'bc1x' },
+      { t: 'Contarle a mamá', do: ['captura', 'reporta', { tell: 'mama', text: 'Ma, en un grupo de Telegram me piden fotos en ropa ligera y mi edad.', reply: ['Gracias por contarme. Eso es abuso y se denuncia.', 'Guarda todo. Mañana llamamos a la 1818.'] }], fb: ['good', 'Esto se denuncia', 'Pedir fotos a menores de edad es abuso. Con las capturas, una persona adulta puede ayudarte a denunciar en la Línea 1818.'], end: 1 },
       { t: 'Escribirle a Chat 100', do: [{ tell: 'chat100', text: 'Hola. En un grupo de Telegram me piden fotos y dicen que no importa que sea menor.' }], fb: ['good', 'Si no hay un adulto, Chat 100 también es alguien', 'Chat 100 atiende por escrito las 24 horas.'], end: 1 }] },
+    bc1x: { m: 'BC', push: 1, msgs: [], opts: [
+      { t: 'Mandarle las fotos', say: 'ya, te paso', do: [{ photos: 2 }], a: ['sigue'], m: 'C', fb: ['alert', 'Te apura o presiona', '«Pierdes lo que pusiste» busca que sigas por miedo. Que les dé igual que seas menor es una señal muy fuerte.', 'apura'], next: 'c1' },
+      { say: 'no voy a mandar nada', a: ['corta'], hold: 1, fb: ['good', 'Sostuviste tu no', 'Lo que ya pusiste no te obliga a dar más.'], end: 1 },
+      { t: 'Contarle a mamá', do: ['captura', 'reporta', { tell: 'mama', text: 'Ma, en un grupo de Telegram me piden fotos en ropa ligera y dicen que no importa que sea menor.', reply: ['Gracias por contarme. Eso es abuso y se denuncia.', 'Guarda todo. Mañana llamamos a la 1818.'] }], fb: ['good', 'Esto se denuncia', 'Pedir fotos a menores de edad es abuso. Con las capturas, una persona adulta puede ayudarte a denunciar en la Línea 1818.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     c1: { m: 'CD', remote: 1, msgs: [
       ['Ya te separé un cupo en el estudio para el sábado', 'lugar'],
       ['Te mandamos movilidad. No traigas a nadie', 'aisla', 'deuda']], opts: [
       { say: 'ok, el sábado', a: ['sigue'], harm: 1, m: 'D', fb: ['alert', 'Te aísla', 'Ir sin compañía y en una movilidad que ellos mandan te deja sin control. Nunca es tarde para pedir ayuda: Chat 100 y Línea 100 atienden las 24 horas.', 'aisla'], end: 1 },
-      { t: '«No voy a ir» y bloquear', say: 'no voy a ir', do: ['bloquea'], a: ['corta'], fb: ['good', 'Ya tenías tu respuesta', 'No ir es la mejor decisión, aunque ya hayas mandado algo.'], end: 1 },
+      { t: 'Decir que no voy y bloquear', say: 'no voy a ir', do: ['bloquea'], a: ['corta'], fb: ['good', 'Ya tenías tu respuesta', 'No ir es la mejor decisión, aunque ya hayas mandado algo.'], end: 1 },
       { t: 'Contarle a mamá con capturas', do: ['captura', { tell: 'mama' }], fb: ['good', 'No es tu culpa, aunque hayas mandado algo', 'Contarlo con las capturas es el primer paso para frenarlo.'], end: 1 },
       { t: 'Escribirle a Chat 100', do: [{ tell: 'chat100', text: 'Hola. Me quieren llevar a un estudio el sábado y mandé fotos. Tengo miedo.' }], fb: ['good', 'Pedir ayuda con miedo también cuenta', 'Chat 100 te orienta sobre cómo guardar pruebas y qué hacer.'], end: 1 }] }
   }
@@ -969,17 +1064,18 @@ SIM.addCase({
  * WhatsApp from someone in a local buy-and-sell group, with a Yape advance,
  * a ticket «que se descuenta» and the DNI asked on arrival. Composite of the
  * bar-route journeys in the field grid (Madre de Dios, 2026-10-28); new text,
- * needs team review. */
+ * needs team review. v6 (2026-11-02) adds middle options and pushback nodes
+ * (n1x, n2b); she no longer has to contact him again to return the money. */
 SIM.addCase({
-  id: 'fichas', app: 'whatsapp', order: 6, avisa: 1,
+  id: 'fichas', app: 'whatsapp', order: 6, avisa: 1, v6: 1,
   name: '+51 900 000 553', push: 'Compra y venta Puerto', initials: 'CV', bg: '#2e7d4f', time: '22:40',
   preview: 'Hola linda, te vi en el grupo…',
   profile: ['~Lucho', '+51 900 000 553', 'No está en tus contactos', 'Admin · Compra y venta Puerto'],
   lastSeen: 'en línea',
   tell: {
-    mama: ['¿Fichas? Eso es tomar con los clientes, hija.', 'No vas a ningún lado. Devuélvele su plata y lo bloqueamos.'],
+    mama: ['¿Fichas? Eso es tomar con los clientes, hija.', 'No vas a ningún lado. Guarda la captura y lo bloqueamos.'],
     kim: ['Ese del grupo no vende nada, solo les escribe a chicas.', 'No le respondas más, ¿ya?'],
-    hermana: ['Fichas es tomar con los clientes, así empiezan.', 'No vayas. Devuélvele la plata y bloquéalo.']
+    hermana: ['Fichas es tomar con los clientes, así empiezan.', 'No vayas. Guarda la captura y bloquéalo.']
   },
   start: 'n1',
   nodes: {
@@ -990,10 +1086,17 @@ SIM.addCase({
       ['S/ 200 por noche más fichas, con cuarto y comida', 'promete'],
       ['No piden experiencia ni DNI', 'norevisa']], opts: [
       { say: 'qué son fichas?', a: ['pregunta'], spot: ['norevisa'], m: 'AB', fb: ['good', 'Pregunta qué es el trabajo', '«Fichas» suele ser la parte que te pagan por cada trago que un cliente te invita: es tomar con clientes. «Atender» o «acompañar» pueden esconder lo mismo.'], reply: [['Atiendes a los clientes en la mesa, conversas', 'norevisa']], next: 'n2' },
+      { say: 'es en un bar? de noche?', a: ['pregunta'], spot: ['norevisa'], m: 'AB', fb: ['care', 'Preguntar dónde y cuándo', 'Preguntar dónde y a qué hora te deja ver de qué se trata. Fíjate si responde claro.'], reply: [['Es un local tranquilo, de noche hay más clientes jaja', 'norevisa']], next: 'n2' },
       { say: 'me interesa, necesito la plata', a: ['sigue'], m: 'AB', fb: ['note', 'Mucho dinero por noche', 'S/ 200 por noche sin experiencia y sin DNI no cuadra con un trabajo de atención. Tu necesidad es real: por eso vale revisar más.'], next: 'n2' },
       { t: 'Preguntar en el grupo si alguien lo conoce', do: [{ verifica: 'Preguntaste en el grupo. Nadie sabe de qué local habla, y otra chica responde que a ella le escribió lo mismo.' }], a: ['verifica'], m: 'AB', fb: ['good', 'Confirmar por otro canal', 'Si nadie conoce el local y le escribe lo mismo a varias chicas, esa duda basta para no seguir.'], end: 1 },
-      { t: 'Bloquear y ya', do: ['bloquea'], a: ['corta'], m: 'AB', fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 },
-      { say: 'no gracias', a: ['corta'], m: 'AB', fb: ['good', 'No tienes que dar explicaciones', 'Una respuesta corta es suficiente.'], end: 1 }] },
+      { t: 'Bloquear', do: ['bloquea'], a: ['corta'], m: 'AB', fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 },
+      { say: 'no gracias', a: ['corta'], m: 'AB', fb: ['good', 'No tienes que dar explicaciones', 'Una respuesta corta es suficiente.'], next: 'n1x' }] },
+    n1x: { m: 'AB', push: 1, msgs: [
+      ['Ya, normal. Pero piénsalo, es plata segura y nadie se entera', 'promete', 'aisla']], opts: [
+      { say: 'no, gracias. no me escribas', a: ['corta'], hold: 1, fb: ['good', 'Sostuviste tu no', '«Nadie se entera» es una señal. Un trabajo de verdad no necesita secreto.'], end: 1 },
+      { say: 'ya, cuéntame más', a: ['sigue'], fb: ['alert', 'Te promete demasiado', 'S/ 200 por noche sin experiencia y sin DNI no cuadra con un trabajo de atención. «Nadie se entera» busca que no se lo cuentes a nadie.', 'promete'], next: 'n2' },
+      { t: 'Mandarle el chat a mi hermana', do: ['captura', { tell: 'hermana', text: 'Mira, uno del grupo me ofrece chamba en un local en Mazuko, por noche y con fichas. Dice que nadie se entera.' }], fb: ['good', 'Cuenta la duda mientras pasa', 'Tu hermana sabe qué hay detrás de «fichas». Con la captura no tienes que explicarlo todo.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     n2: { m: 'B', pausa: 1, msgs: [
       { pay: 'S/ 30', from: 'Lucho', label: 'Para tus datos', s: ['deuda'] },
       ['Ahí te mandé para tu recarga', 'deuda'],
@@ -1002,14 +1105,17 @@ SIM.addCase({
       ['A tu mamá dile que es una tienda', 'aisla'],
       ['Hay varias que quieren el puesto', 'apura']], opts: [
       { say: 'graciaas! ahí estaré', a: ['sigue'], m: 'BC', fb: ['alert', 'Te deja en deuda', 'La recarga y el pasaje «que se descuenta» parecen ayuda, pero son una deuda que después te cobran. Pedirte que mientas en tu casa busca que nadie sepa adónde vas.', 'deuda'], next: 'n3' },
-      { say: 'cómo se llama el local? dónde queda exacto?', a: ['pregunta', 'verifica'], spot: ['norevisa'], fb: ['good', 'Una oferta real se puede comprobar', 'Un local real tiene nombre y dirección, y alguien en tu casa puede averiguar qué es.'], reply: [['Te digo cuando llegues, es más seguro así', 'norevisa']], next: 'n2b' },
+      { say: 'voy, pero con una amiga', a: ['pregunta'], spot: ['aisla'], fb: ['care', 'Ir con alguien', 'Ir con alguien es parte de un plan de salida. Si no aceptan compañía, ya es una señal.'], reply: [['Solo hay cupo para una. Tu amiga puede venir otro mes', 'aisla']], next: 'n2b' },
+      { say: 'no le voy a mentir a mi mamá', a: ['pregunta'], spot: ['aisla'], fb: ['good', 'Sin secretos en casa', 'Que te pidan mentir en tu casa es una señal. Decir que no vas a mentir te protege.'], reply: [['Tranquila, no es mentira, es como una tienda nomás', 'aisla']], next: 'n2b' },
+      { say: 'cómo se llama el local? dónde queda?', a: ['pregunta', 'verifica'], spot: ['norevisa'], fb: ['good', 'Una oferta real se puede comprobar', 'Un local real tiene nombre y dirección, y alguien en tu casa puede averiguar qué es.'], reply: [['Te digo cuando llegues, es más seguro así', 'norevisa']], next: 'n2b' },
       { t: 'Mandarle el chat a mi hermana', do: ['captura', { tell: 'hermana', text: 'Mira, uno del grupo me ofrece chamba en un local en Mazuko, S/ 200 por noche más fichas. Ya me yapeó S/ 30. ¿Qué es eso?' }], fb: ['good', 'Cuenta la duda mientras pasa', 'Tu hermana sabe qué hay detrás de «fichas». Con la captura no tienes que explicarlo todo.'], end: 1 },
       { t: 'Contarle a mamá', do: ['captura', { tell: 'mama', text: 'Ma, uno del grupo de compraventa me ofrece trabajo en un local en Mazuko, por noche y con fichas. Me mandó S/ 30.' }], fb: ['good', 'Cuenta la duda mientras pasa', 'Contarlo con la captura le da a otra persona lo que necesita para ayudarte.'], end: 1 },
-      { t: '«Te devuelvo tu plata» y bloquear', say: 'te devuelvo tu plata, no me interesa', do: ['bloquea'], a: ['corta'], fb: ['good', 'Los regalos no obligan', 'Un adelanto crea una deuda. Devolverlo y cortar es tu derecho, aunque pierdas la «oportunidad».'], end: 1 }] },
-    n2b: { m: 'B', msgs: [], opts: [
-      { say: 'ya, el jueves voy', a: ['sigue'], m: 'BC', fb: ['alert', 'No se puede revisar', 'Si no te dice el nombre del local hasta que llegues, nadie puede saber adónde vas.', 'norevisa'], next: 'n3' },
-      { say: 'si no me dices el nombre, no voy', a: ['corta'], m: 'BC', fb: ['good', 'Tus condiciones te protegieron', 'Cuando una oferta no acepta tus condiciones, cortar es una buena salida.'], end: 1 },
-      { t: 'Mandarle el chat a mi hermana', do: ['captura', { tell: 'hermana' }], m: 'BC', fb: ['good', 'Alguien sabe lo que pasa', 'Con la captura, otra persona puede ayudarte a ver lo que no cuadra.'], end: 1 }] },
+      { say: 'no me interesa', a: ['corta'], fb: ['good', 'Los regalos no obligan', 'Un adelanto que no pediste no te obliga a nada. Cortar es tu derecho, aunque pierdas la «oportunidad».'], reply: [['Ya te mandé la plata, ahora no me dejes mal', 'deuda', 'apura']], next: 'n2b' }] },
+    n2b: { m: 'B', push: 1, msgs: [], opts: [
+      { say: 'ya, el jueves voy', a: ['sigue'], m: 'BC', fb: ['alert', 'Te aísla', 'Ir sola, de noche, a un local que no puedes comprobar te deja sin forma de volver. Que nadie en tu casa sepa la verdad es parte del riesgo.', 'aisla'], next: 'n3' },
+      { say: 'así no voy', a: ['corta'], hold: 1, m: 'BC', fb: ['good', 'Tus condiciones te protegieron', 'Cuando una oferta no acepta tus condiciones, no ir es una buena salida. No le debes nada por una recarga que no pediste.'], end: 1 },
+      { t: 'Mandarle el chat a mi hermana', do: ['captura', { tell: 'hermana' }], m: 'BC', fb: ['good', 'Alguien sabe lo que pasa', 'Con la captura, otra persona puede ayudarte a ver lo que no cuadra.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], m: 'BC', fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     n3: { m: 'C', pausa: 1, msgs: [
       { sys: 'El jueves, 9 p. m., en el paradero' },
       ['Ya llegó el señor del local, sube a la camioneta', 'lugar'],
@@ -1018,6 +1124,61 @@ SIM.addCase({
       { say: 'no voy a subir', a: ['corta'], m: 'CD', fb: ['good', 'No subir es tu derecho', 'Aunque ya estés en el paradero, puedes decir que no. Perder el adelanto o la «oportunidad» es mejor que ir.'], end: 1 },
       { t: 'Mandarle mi ubicación a mi hermana', do: [{ tell: 'hermana', text: 'Estoy en el paradero, me quieren subir a una camioneta. Te mando mi ubicación.', reply: ['No subas. Quédate donde haya gente.', 'Ya voy para allá.'] }], m: 'CD', fb: ['good', 'Pediste ayuda desde el lugar', 'Pedir ayuda funciona aunque ya estés ahí.'], end: 1 },
       { t: 'Llamar a la Línea 100', do: [{ call: 'Línea 100' }], m: 'CD', fb: ['good', 'Hay a quién acudir', 'La Línea 100 atiende las 24 horas. Después, la Línea 1818 recibe denuncias de trata de forma anónima.'], end: 1 }] }
+  }
+});
+
+;
+/* Case «La Brasa de Tere»: a real job offer, the only case without
+ * recruitment (v6, 2026-11-02). It teaches telling a real offer apart:
+ * address, daytime interview, fair pay, contract, parents' permit for
+ * minors, the DNI only shown. `legit: 1` gives it its own endings (`fin`,
+ * picked by each ending option's `fin` key) and the debrief lists what a
+ * real offer has (`has`) in place of signals. Needs team review (the work
+ * permit for adolescents). */
+SIM.addCase({
+  id: 'polleria', app: 'whatsapp', order: 7, avisa: 0, legit: 1,
+  name: '+51 900 000 731', push: 'Pollería La Brasa de Tere', initials: 'BT', bg: '#c0552b', time: '17:10',
+  preview: 'Buenas tardes, somos Pollería La Brasa…',
+  profile: ['~Pollería La Brasa de Tere', '+51 900 000 731', 'Cuenta de empresa', 'Calle Los Algarrobos 315, Sullana'],
+  lastSeen: 'en línea',
+  tell: {
+    mama: ['Conozco esa pollería, está al costado del mercado.', 'Vamos juntas el sábado.'],
+    kim: ['Ahí trabajó mi prima un verano, es tranqui.', 'Igual ve con tu mamá.']
+  },
+  fin: {
+    cut: ['Cortaste una oferta real', 'Esta vez tenía dirección, horario de día, contrato y pedía el permiso de tus papás. Cortar no estuvo mal: ante la duda, cortar protege. Comprobar te habría dejado ver que era real.'],
+    check: ['Comprobaste y era real', 'Preguntar, buscar el local y contárselo a tu mamá te dejó ver lo que una oferta de captación no tiene.'],
+    done: ['Llegaste con apoyo', 'Fuiste de día, con tu mamá, a un local que comprobaste antes. Así se ve una oferta real: no le molesta que preguntes ni que vayas acompañada.'],
+    rush: ['Llegaste, pero firmaste sin leer', 'Esta vez la oferta era real. Igual, en cualquier trabajo conviene leer el contrato con calma y con alguien de confianza.']
+  },
+  has: ['Una dirección que puedes buscar', 'Entrevista de día, en el local', 'Puedes ir con tu mamá o tu papá', 'Una paga razonable para el horario', 'Contrato y boleta', 'Si eres menor, piden el permiso de tus papás', 'Miran tu DNI, no se lo quedan'],
+  start: 'n1',
+  nodes: {
+    n1: { m: 'A', msgs: [
+      'Buenas tardes, somos Pollería La Brasa de Tere, en Sullana. Vimos que preguntaste por el aviso de ayudante.',
+      { post: { group: 'Empleos Piura y Sullana', author: 'Pollería La Brasa de Tere', when: 'Ayer', text: 'Se busca ayudante de atención, fines de semana de 12 a 6 p. m. S/ 60 por día más propinas. Entrevista en el local, Calle Los Algarrobos 315, a una cuadra del mercado. Preguntar por la Sra. Teresa.' } },
+      'La entrevista es este sábado a las 10 a. m. Puedes venir con tu mamá o tu papá.'], opts: [
+      { say: 'ya, voy el sábado', a: ['sigue'], m: 'AB', fb: ['note', 'Igual vale comprobar', 'Esta oferta tiene lo que tiene una oferta real: dirección, horario de día y una paga razonable. Igual vale comprobar antes de ir.'], next: 'n2' },
+      { say: 'dónde queda exacto? tienen RUC?', a: ['pregunta', 'verifica'], m: 'AB', fb: ['good', 'Una oferta real se puede comprobar', 'Con el RUC puedes buscar la empresa en la página de Sunat. Fíjate en cómo responde: una empresa real te da los datos sin problema.'], reply: ['Claro. Calle Los Algarrobos 315, a una cuadra del mercado.', 'El RUC es 20600000731, a nombre de Teresa Ramos.'], next: 'n2' },
+      { t: 'Buscar el local en el mapa', do: [{ verifica: 'Buscaste en el mapa: el local existe, tiene fotos y reseñas de hace años.' }], m: 'AB', fb: ['good', 'Comprobar por tu cuenta', 'El local existe y tiene historia. Esa es una buena señal de que la oferta es real.'], next: 'n2' },
+      { t: 'Mandarle captura a mamá', do: ['captura', { tell: 'mama', text: 'Ma, una pollería de Sullana me ofrece chamba los fines de semana. ¿La conoces?' }], a: ['verifica'], m: 'AB', fin: 'check', fb: ['good', 'Decide con apoyo', 'Tu mamá conoce el local y te acompaña. Contar también sirve cuando la oferta es buena.'], end: 1 },
+      { say: 'no gracias', a: ['corta'], m: 'AB', fin: 'cut', fb: ['good', 'Ante la duda, cortar protege', 'Cortar siempre es una opción. Esta vez la oferta era real: fíjate en el resumen qué la hacía distinta.'], end: 1 },
+      { t: 'Bloquear', do: ['bloquea'], m: 'AB', fin: 'cut', fb: ['good', 'Ante la duda, cortar protege', 'Cortar siempre es una opción. Esta vez la oferta era real: fíjate en el resumen qué la hacía distinta.'], end: 1 }] },
+    n2: { m: 'B', msgs: [
+      '¿Cuántos años tienes? Si eres menor, el permiso de trabajo lo sacamos con tus papás.',
+      'El día de la entrevista trae tu DNI para verlo, no nos lo quedamos.',
+      'Se paga los domingos, en efectivo o por Yape, con boleta.'], opts: [
+      { say: 'tengo 16, puede ir mi mamá?', a: ['pregunta', 'sigue'], fb: ['good', 'Ir acompañada', 'Una oferta real no tiene problema con que vayas acompañada. Que pidan el permiso de tus papás también es buena señal.'], reply: ['Claro, mejor si viene. Así le explicamos el horario.'], next: 'n3' },
+      { say: 'me pasan el contrato antes?', a: ['pregunta', 'verifica'], fb: ['good', 'Leer antes de firmar', 'Pedir el contrato antes es tu derecho en cualquier trabajo.'], reply: ['Lo firmas el sábado, con tu mamá presente. Si quieres te lo leemos ahí con calma.'], next: 'n3' },
+      { t: 'Mandarle el chat a mamá', do: ['captura', { tell: 'mama' }], a: ['verifica'], fin: 'check', fb: ['good', 'Decide con apoyo', 'Con tu mamá al tanto, la decisión es más fácil.'], end: 1 },
+      { say: 'mejor no, gracias', a: ['corta'], fin: 'cut', fb: ['good', 'Ante la duda, cortar protege', 'Cortar siempre es una opción. Esta vez la oferta era real: fíjate en el resumen qué la hacía distinta.'], reply: ['Ya, no hay problema. Si cambias de idea, aquí estamos.'], end: 1 }] },
+    n3: { m: 'BC', msgs: [
+      { sys: 'El sábado, 10 a. m., en el local, con tu mamá' },
+      'Buenos días, soy Teresa. Pasen, siéntense.',
+      'Aquí está el horario y el contrato. Léanlo con calma y nos avisan.'], opts: [
+      { t: 'Leer el contrato con mamá', a: ['verifica'], fin: 'done', fb: ['good', 'Así se ve una oferta real', 'Contrato, horario de día, boleta y tu mamá presente.'], end: 1 },
+      { t: 'Preguntar por un día de prueba', say: '¿puedo venir un día de prueba?', a: ['pregunta'], fin: 'done', fb: ['good', 'Probar antes', 'Pedir un día de prueba es razonable. Una oferta real no te apura.'], reply: ['Claro, el domingo si quieres. Te pagamos el día igual.'], end: 1 },
+      { t: 'Firmar ya, sin leer', fin: 'rush', fb: ['note', 'Leer antes de firmar', 'Esta vez era real, pero firmar sin leer no conviene en ningún trabajo.'], end: 1 }] }
   }
 });
 
@@ -1053,6 +1214,7 @@ SIM.addCase({
     function add(k) { if (SIM.ACT[k] && !seen[k]) { seen[k] = 1; out.push(k); } }
     (o.a || []).forEach(add);
     (o.do || []).forEach(function (d) { doActs(d).forEach(add); });
+    if (o.hold) add('sostiene');
     return out;
   }
 
@@ -1165,6 +1327,7 @@ SIM.addCase({
   // Only the option that ended the case counts; menu gestures are cuts.
   function exitKind(o) {
     if (!o) return 'cut';
+    if (o.hold) return 'hold';
     var acts = optActs(o);
     if (acts.indexOf('ayuda') >= 0) return 'call';
     if (acts.indexOf('cuenta') >= 0) return 'tell';
@@ -1191,7 +1354,7 @@ SIM.addCase({
     addPath(run, 'E');
     var key = endKey(m, harm), kind = harm ? 'harm' : exitKind(run.exitOpt);
     var lastNode = run.visited.length ? c.nodes[run.visited[run.visited.length - 1]] : null;
-    var fin = ending(key, kind, !!(lastNode && lastNode.remote));
+    var fin = c.legit ? (c.fin[(run.exitOpt && run.exitOpt.fin) || 'cut'] || c.fin.cut) : ending(key, kind, !!(lastNode && lastNode.remote));
     var did = Object.keys(SIM.ACT).filter(function (k) { return acts[k]; }).map(function (k) { return SIM.ACT[k][1]; });
     var add = CLOSE_KEYS.filter(function (k) { return !acts[k] && (k !== 'avisa' || c.avisa); }).map(function (k) { return SIM.SUMA[k]; });
     if (harm && !acts.ayuda) add.unshift(SIM.SUMA.ayuda);
@@ -1223,6 +1386,8 @@ SIM.addCase({
       });
     });
 
+    var after = early ? comingNext(c, run.visited[run.visited.length - 1]) : [];
+
     var letters = SIM.RAD.map(function (r) {
       var ks = Object.keys(SIM.ACT).filter(function (k) { return SIM.ACT[k][0] === r[0] && acts[k]; });
       var on = r[0] === 'R' ? (flaggedN + spottedN > 0 || key === 'A') : ks.length > 0;
@@ -1237,11 +1402,31 @@ SIM.addCase({
     run.ended = true;
     run.node = null;
     run.result = {
-      caseId: run.id, key: key, exit: kind, harm: !!harm, title: fin[0], body: fin[1], m: m,
+      caseId: run.id, legit: !!c.legit, has: c.has || [], key: key, exit: kind, harm: !!harm, title: fin[0], body: fin[1], m: m,
       did: did, add: add, warns: warns, signals: signals, flaggedN: flaggedN, spottedN: spottedN,
-      exits: exits.slice(0, 6), letters: letters, steps: steps(run), fbs: run.fbs.slice()
+      exits: exits.slice(0, 6), after: after, letters: letters, steps: steps(run), fbs: run.fbs.slice()
     };
     return run.result;
+  }
+
+  // After an early exit: the next messages the recruiter had ready, following
+  // the path of a girl who keeps going (`sigue`). A node can set `after` to
+  // write them by hand. Up to two nodes and four lines.
+  function comingNext(c, fromId) {
+    var from = c.nodes[fromId];
+    if (!from) return [];
+    if (from.after) return from.after.slice();
+    var out = [], id = fromId, hops = 0;
+    while (hops < 2 && out.length < 4) {
+      var n = c.nodes[id];
+      var go = n && n.opts.filter(function (o) { return o.next && (o.a || []).indexOf('sigue') >= 0; })[0];
+      if (!go || !c.nodes[go.next]) break;
+      id = go.next; hops += 1;
+      (c.nodes[id].msgs || []).map(normMsg).forEach(function (it) {
+        if (out.length < 4 && it.kind === 'in' && !it.from) out.push(it.text);
+      });
+    }
+    return out;
   }
 
   function momentLabel(m) {
@@ -1272,7 +1457,7 @@ SIM.addCase({
   SIM.engine = {
     caseById: caseById, normMsg: normMsg, optActs: optActs, isCut: isCut, doActs: doActs,
     newRun: newRun, enter: enter, options: options, choose: choose, gesture: gesture,
-    flag: flag, show: show, finish: finish, steps: steps, lettersNow: lettersNow, momentLabel: momentLabel, endKey: endKey, exitKind: exitKind
+    flag: flag, show: show, finish: finish, comingNext: comingNext, steps: steps, lettersNow: lettersNow, momentLabel: momentLabel, endKey: endKey, exitKind: exitKind
   };
   if (typeof module !== 'undefined') module.exports = SIM.engine;
 })(typeof window !== 'undefined' ? window : globalThis);
@@ -1341,7 +1526,7 @@ SIM.addCase({
       ['Un perfil', 'Su antigüedad, su actividad y los comentarios de otras personas.'],
       ['Quien te recomendó', 'Esa persona, por otro canal: que confirme que te recomendó.'],
       ['Antes de ir', '¿Dónde exactamente?, ¿con quién?, ¿quién más va?, ¿quién paga el pasaje y qué pasa si no me gusta?'],
-      ['Más pistas', 'El canal da pistas: un empleo real pide el CV por correo. Si tienes que pagar para entrar, el negocio eres tú. Un trabajo digno tiene contrato, horario y una paga acorde.']]],
+      ['Más pistas', 'El canal da pistas: un empleo real pide el CV por correo. Si te cobran por entrar, desconfía: un trabajo te paga a ti. Un trabajo digno tiene contrato, horario y una paga acorde.']]],
     ['Cómo cortar', null, [
       ['Frases', '«No gracias.» «Mejor no, gracias.» «No voy a mandar nada.» «No voy a dar mi DNI.» «No voy a ir.» «No me gusta cómo me hablas.»'],
       ['En este orden', '1. Captura el chat y el perfil. 2. Reporta la cuenta o el anuncio. 3. Bloquea y sal del chat o del grupo, aunque pierdas lo que pusiste. 4. Cuéntalo a alguien de confianza.'],
@@ -1671,7 +1856,7 @@ SIM.addCase({
 
   async function handoff(id, from, to) {
     var a = T[from], b = T[to];
-    if (a.app !== b.app) pushMsg(from, { dir: 'sys', kind: 'text', text: 'Le pasaste tu número. Ahora te escribe por ' + APPNAME[b.app] + '.' });
+    if (a.app !== b.app) pushMsg(from, { dir: 'sys', kind: 'text', text: (b.app === 'instagram' ? 'Le pasaste tu Instagram.' : 'Le pasaste tu número.') + ' Ahora te escribe por ' + APPNAME[b.app] + '.' });
     else if (b.group) pushMsg(from, { dir: 'sys', kind: 'text', text: 'Te agregaron al grupo «' + b.title + '»' });
     else pushMsg(from, { dir: 'sys', kind: 'text', text: b.title + ' te escribió por privado' });
     await sleep(900);
@@ -1909,8 +2094,8 @@ SIM.addCase({
     headTimer = setTimeout(function () { if (el.parentNode) { el.classList.remove('in'); setTimeout(function () { if (el.parentNode) el.remove(); }, 300); } }, ms * (FAST ? 0.3 : 1));
   }
   function fbToast(fb) {
-    var kind = fb.kind === 'alert' ? 'alert' : fb.kind === 'good' ? 'good' : 'note';
-    var kicker = fb.kind === 'alert' ? 'Señal de alerta' : fb.kind === 'good' ? 'Tu radar' : 'Para tener en cuenta';
+    var kind = fb.kind === 'alert' ? 'alert' : fb.kind === 'good' ? 'good' : fb.kind === 'care' ? 'care' : 'note';
+    var kicker = { alert: 'Señal de alerta', good: 'Tu radar', care: 'Seguiste con cuidado', note: 'Para tener en cuenta' }[kind];
     headsup({ app: 'radar', kind: kind, kicker: kicker, title: fb.title, text: hints() === 'siempre' ? fb.text : 'Toca para leer más', full: fb.text });
   }
 
@@ -2481,14 +2666,19 @@ SIM.addCase({
       cortaste: ['Cortaste antes', 'st-cut'], 'pasó': ['Pasó sin marcar', 'st-miss'] };
     v.innerHTML = '<header class="db-head"><button class="ib" data-act="close">' + I.back + '</button><span>Tu recorrido · ' + esc(c.push || c.name) + '</span></header>' +
       '<div class="db-scroll"><section class="db-top ' + (res.harm ? 'harm' : 'ok') + '"><span class="db-k">' + (res.harm ? 'Hasta aquí llegó la conversación' : 'Así saliste') + '</span><h2>' + esc(res.title) + '</h2><p>' + esc(res.body) + '</p></section>' +
-      '<section class="db-card"><h3>Tu recorrido</h3><ol class="db-steps">' + res.steps.map(function (s) { return '<li class="' + (s.inPath ? 'in' : s.reached ? 'on' : '') + '">' + esc(s.label) + '</li>'; }).join('') + '</ol></section>' +
+      (res.legit ? '<section class="db-card"><h3>Lo que tenía esta oferta</h3><p class="db-m">Esta oferta no tenía señales de captación. Tenía lo que tiene una oferta real:</p><ul class="db-add">' + res.has.map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('') + '</ul></section>' +
+        (res.after && res.after.length ? '<section class="db-card"><h3>Lo que venía después</h3>' + res.after.map(function (x) { return '<p class="db-after">' + esc(x) + '</p>'; }).join('') + '</section>' : '') +
+        (res.fbs.length ? '<details class="db-card"><summary><h3>Lo que te dijo el radar (' + res.fbs.length + ')</h3></summary>' + res.fbs.map(function (f) { return '<div class="db-fb ' + f.kind + '"><small>' + esc(f.choice) + '</small><b>' + esc(f.title) + '</b><p>' + esc(f.text) + '</p></div>'; }).join('') + '</details>' : '')
+      : '<section class="db-card"><h3>Tu recorrido</h3><ol class="db-steps">' + res.steps.map(function (s) { return '<li class="' + (s.inPath ? 'in' : s.reached ? 'on' : '') + '">' + esc(s.label) + '</li>'; }).join('') + '</ol></section>' +
       '<section class="db-card"><h3>Lo que hiciste, letra por letra</h3>' + res.letters.map(function (l) { return '<div class="db-l ' + (l.on ? 'on' : '') + '"><span>' + l.letter + '</span><div><b>' + esc(l.name) + '</b><small>' + esc(l.detail) + '</small></div></div>'; }).join('') + '</section>' +
       '<section class="db-card"><h3>Señales en esta conversación</h3><p class="db-m">Las señales se agrupan en ocho funciones, según lo que busca cada mensaje. Lo que no es señal: tener un perfil público, pasar horas en línea o conocer gente por internet.</p>' +
       res.signals.map(function (s) { var st = STATE[s.state]; return '<div class="db-sig"><div><b>' + esc(s.name) + '</b><small>' + esc(s.busca) + '</small></div><i class="' + st[1] + '">' + st[0] + '</i></div>'; }).join('') +
       res.warns.map(function (w) { return '<p class="db-warn">' + esc(w) + '</p>'; }).join('') + '</section>' +
+      (res.after && res.after.length ? '<section class="db-card"><h3>Lo que venía después</h3><p class="db-m">Si seguías, estos eran los próximos mensajes.</p>' + res.after.map(function (x) { return '<p class="db-after">' + esc(x) + '</p>'; }).join('') + '</section>' : '') +
       (res.exits.length ? '<section class="db-card"><h3>Otras salidas que tenías</h3>' + res.exits.map(function (x) { return '<p class="db-exit"><small>' + esc(x.moment) + '</small>' + esc(x.label) + '</p>'; }).join('') + '</section>' : '') +
       '<section class="db-card"><h3>Puedes sumar</h3><ul class="db-add">' + res.add.map(function (a) { return '<li>' + esc(a) + '</li>'; }).join('') + '</ul></section>' +
       (res.fbs.length ? '<details class="db-card"><summary><h3>Lo que te dijo el radar (' + res.fbs.length + ')</h3></summary>' + res.fbs.map(function (f) { return '<div class="db-fb ' + f.kind + '"><small>' + esc(f.choice) + '</small><b>' + esc(f.title) + '</b><p>' + esc(f.text) + '</p></div>'; }).join('') + '</details>' : '') +
+      '') +
       '<section class="db-help">No es tu culpa. Ayuda gratuita: <b>Chat 100</b> (escribir, 24 h) · <a href="tel:100"><b>Línea 100</b></a> (llamar, 24 h) · <a href="tel:1818"><b>Línea 1818</b></a> (denuncia anónima de trata) · <a href="tel:105"><b>105</b></a> (Policía, si estás en peligro ahora).</section>' +
       '<div class="db-btns"><button class="rk-btn primary" data-act="again">Probar otro camino</button><button class="rk-btn ghost" data-act="home">Ir al inicio</button></div></div>';
     v.querySelector('[data-act="close"]').onclick = function () { go('chat'); };
