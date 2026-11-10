@@ -316,6 +316,14 @@ svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
 .hu.in { transform: translateY(0); }
 .hu.mini { padding: 7px 12px; border-radius: 14px; }
 .hu.sticky { box-shadow: 0 0 0 2px var(--rg2), 0 8px 30px rgba(0,0,0,.25); }
+/* RADAR notices that stay up until tapped: own frame and a soft pulse. */
+.hu.hold { background: #fff; border-left: 6px solid var(--rg2); box-shadow: 0 0 0 2px rgba(21,82,64,.25), 0 10px 32px rgba(0,0,0,.3); }
+.hu.hold.alert { border-left-color: var(--ro); box-shadow: 0 0 0 2px rgba(242,101,41,.45), 0 10px 32px rgba(0,0,0,.3); }
+.hu.hold.pause { border-left-color: #f2b029; box-shadow: 0 0 0 2px rgba(242,176,41,.5), 0 10px 32px rgba(0,0,0,.3); }
+.hu.hold.care { border-left-color: #7a5bbf; } .hu.hold.note { border-left-color: #2b4085; }
+.hu.hold.in { animation: hu-pulse 1.6s ease-in-out .4s 2; }
+.hu.hold .hu-t b { font-size: 15px; }
+@keyframes hu-pulse { 50% { transform: translateY(0) scale(1.025); } }
 .hu-t { display: flex; flex-direction: column; min-width: 0; font-size: 14px; }
 .hu-app { font-size: 11.5px; color: #666; }
 .hu-t b { display: flex; gap: 6px; align-items: center; font-weight: 700; }
@@ -721,7 +729,7 @@ SIM.addCase({
     n2b: { m: 'B', push: 1, msgs: [], opts: [
       { t: 'Mandar las fotos', say: 'ok, ahí van', do: [{ photos: 3 }], a: ['sigue'], fb: ['alert', 'Te pide cada vez más', 'Si no responde tus dudas y sigue pidiendo, ya es una señal. Una oferta real te deja tiempo para preguntar y no necesita fotos de cuerpo entero.', 'pide'], next: 'n3' },
       { say: 'así no me interesa, gracias', a: ['corta'], hold: 1, fb: ['good', 'Cortaste a tiempo', 'Notaste la señal y decidiste. No necesitas más pruebas para cortar.'], end: 1 },
-      { t: 'Capturar y mandárselo a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La otra persona puede ayudarte a ver lo que no cuadra.'], end: 1 },
+      { t: 'Capturar y mandárselo a tu amiga Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La otra persona puede ayudarte a ver lo que no cuadra.'], end: 1 },
       { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Cortaste por tu cuenta, y eso protege. Si capturas antes, guardas pruebas; si vuelve a escribir, mejor que alguien lo sepa.'], end: 1 }] },
     n3: { m: 'BC', pausa: 1, msgs: [
       ['Listo, quedaste. La entrevista es mañana a las 7 p. m. en un departamento del centro.', 'lugar'],
@@ -738,7 +746,7 @@ SIM.addCase({
     n3b: { m: 'BC', push: 1, msgs: [], opts: [
       { say: 'no voy a ir', a: ['corta'], hold: 1, fb: ['good', 'Ya tenías tu respuesta', 'Si no pueden decirte dónde ni con quién, no ir es la mejor decisión.'], end: 1 },
       { t: 'Ir igual, avisándole a mamá', say: 'ok, voy', do: [{ tell: 'mama', text: 'Mañana voy a una entrevista en un depa del centro a las 7. Te mando la ubicación.', reply: ['¿Sin RUC ni dirección? Así no me gusta, mejor no vayas.', 'Si igual vas, avísame a las 8 sí o sí. Si no, te llamo y voy.'] }], m: 'C', fb: ['note', 'Un plan de salida ayuda', 'Ve con alguien, llega temprano, no entregues tu DNI y acuerda una hora para avisar. Puedes irte aunque ya estés ahí.'], next: 'n4' },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
+      { t: 'Mandarle el chat a tu amiga Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
       { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas y reportas antes, proteges a otras personas.'], end: 1 }] },
     n4: { m: 'CD', msgs: [
       { sys: 'Al día siguiente, frente al edificio' },
@@ -780,7 +788,7 @@ SIM.addCase({
       { say: 'holaa gracias, soy de Piura y tú?', a: ['sigue'], m: 'AB', fb: ['alert', 'Se gana tu confianza rápido', 'Los halagos y las amistades en común bajan la guardia. Que sea amable no lo hace seguro. Fíjate también en la cuenta: es nueva, con foto de anime, sin publicaciones, y borró un mensaje.', 'confianza'], next: 'n2' },
       { say: 'jaja gracias, de qué historias?', a: ['pregunta'], spot: ['confianza'], m: 'AB', fb: ['care', 'Preguntar sin dar datos', 'Preguntar sin dar datos te deja ver cómo responde. Fíjate en la cuenta: es nueva, sin publicaciones, y borró un mensaje.'], reply: [['De las de Kim, ella me sigue jaja', 'confianza']], next: 'n2' },
       { say: 'quién eres? de dónde me conoces?', a: ['pregunta'], spot: ['confianza'], m: 'AB', fb: ['care', 'Revisa la cuenta', 'Una cuenta nueva o anónima, con foto de anime, meme o IA, que borra mensajes si no contestas rápido o que tiene a otra cuenta respondiendo por ella en los comentarios, no se puede comprobar. Ojo: no todo es un perfil falso; muchas veces quien capta usa su perfil real.'], reply: [['Jaja, qué desconfianza. Solo quiero conocerte.', 'apura']], next: 'n2' },
-      { t: 'Preguntarle a Kim si lo conoce', do: [{ tell: 'kim', text: '¿Conoces a jx_music07? Dice que me vio en tus historias.' }], a: ['verifica'], m: 'AB', fb: ['good', 'Confirmar por otro canal', 'Preguntar por otro medio a quien supuestamente te conoce es la mejor forma de comprobar. Tu amistad responde: «No sé quién es».'], end: 1 },
+      { t: 'Preguntarle a tu amiga Kim si lo conoce', do: [{ tell: 'kim', text: '¿Conoces a jx_music07? Dice que me vio en tus historias.' }], a: ['verifica'], m: 'AB', fb: ['good', 'Confirmar por otro canal', 'Preguntar por otro medio a quien supuestamente te conoce es la mejor forma de comprobar. Tu amistad responde: «No sé quién es».'], end: 1 },
       { t: 'No responder', do: ['silencio'], m: 'AB', fb: ['good', 'No responder es una salida', 'No le debes una respuesta. Estas cuentas suelen volver a escribir.'], next: 'n1x' },
       { t: 'Bloquear', do: ['bloquea'], m: 'AB', fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas para reportar.'], end: 1 }] },
     n1x: { m: 'AB', push: 1, msgs: [
@@ -789,7 +797,7 @@ SIM.addCase({
       ['Solo quiero conocerte, no seas así.', 'apura']], opts: [
       { t: 'Seguir sin responder', do: ['silencio'], hold: 1, fb: ['good', 'Sostuviste tu silencio', 'Insistir es parte del guion. No responder sigue siendo una respuesta.'], end: 1 },
       { say: 'perdón, recién veo jaja', a: ['sigue'], fb: ['note', 'No le debes una respuesta', 'La insistencia busca que sientas que debes algo. No le debes una respuesta.'], next: 'n2' },
-      { t: 'Mandarle la captura a Kim', do: ['captura', { tell: 'kim', text: 'Esta cuenta me sigue escribiendo, ¿la conoces?' }], fb: ['good', 'Contar no te obliga a nada', 'Mostrar la captura basta para empezar. Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
+      { t: 'Mandarle la captura a tu amiga Kim', do: ['captura', { tell: 'kim', text: 'Esta cuenta me sigue escribiendo, ¿la conoces?' }], fb: ['good', 'Contar no te obliga a nada', 'Mostrar la captura basta para empezar. Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
       { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas para reportar.'], end: 1 }] },
     n2: { m: 'B', pausa: 1, msgs: [
       ['Siento que te conozco de siempre. Me caes demasiado bien.', 'confianza'],
@@ -799,11 +807,11 @@ SIM.addCase({
       { say: 'mejor sigamos por aquí nomás', a: ['sigue'], fb: ['care', 'Quedarte donde hay registro', 'Quedarte en Instagram ayuda: queda registro y puedes reportar. Igual, ya te pidió mentir tu edad, y esa señal no se va.'], next: 'n3' },
       { say: 'y pa qué quieres mi número?', a: ['pregunta'], spot: ['aisla'], fb: ['care', 'Preguntar está bien', 'Si te hace sentir culpable por dudar, es otra señal.'], reply: [['Ya pues, no seas así. Pensé que eras diferente.', 'apura']], next: 'n3' },
       { say: 'no paso mi número', a: ['corta'], fb: ['good', 'Una respuesta corta basta', 'No tienes que explicar por qué.'], reply: [['Ya, normal. Pensé que eras más madura.', 'apura']], next: 'n2x' },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La incomodidad es una señal, no una culpa. Mostrar la captura basta para empezar.'], end: 1 }] },
+      { t: 'Mandarle el chat a tu amiga Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La incomodidad es una señal, no una culpa. Mostrar la captura basta para empezar.'], end: 1 }] },
     n2x: { m: 'B', push: 1, msgs: [], opts: [
       { say: 'ya te dije que no', a: ['corta'], hold: 1, fb: ['good', 'Sostuviste tu no', 'Te hizo sentir inmadura por decir que no. Esa presión es otra señal.'], end: 1 },
       { say: 'ya ya, perdón. toma mi número', a: ['sigue'], app: 'whatsapp', fb: ['alert', 'Te aísla', 'La culpa por decir que no es una forma de presión. Pasar a WhatsApp saca la conversación de la vista de otras personas.', 'aisla'], next: 'n3' },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
+      { t: 'Mandarle el chat a tu amiga Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'Otra mirada ayuda a ver lo que no cuadra.'], end: 1 },
       { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas para reportar.'], end: 1 }] },
     n3: { m: 'BC', pausa: 1, msgs: [
       ['Mándame una foto tuya, solo para mí.', 'pide'],
@@ -909,7 +917,8 @@ SIM.addCase({
  * WhatsApp, asks for a secret photo and a meeting with his «cousin» in a car.
  * Adapted from v0.1.1 case 03_freefire to the v4 node schema. Feedback texts
  * are new and follow the v4 wording; they need team review. v6 (2026-11-02)
- * adds middle options and pushback nodes (a1x, b2, bc1x). */
+ * adds middle options and pushback nodes (a1x, b2, bc1x). 2026-11-10: history
+ * before today in a1 and b1 (skin, a week of duos, five days of WhatsApp). */
 SIM.addCase({
   id: 'freefire', app: 'game', order: 4, v6: 1,
   name: 'Kevin_FF', initials: 'K', bg: '#7a4e9c', time: '20:55',
@@ -923,8 +932,17 @@ SIM.addCase({
   },
   start: 'a1',
   nodes: {
+    // History before today (team review 2026-11-10): the gifts and the late
+    // talks come first, so the request and the guilt land after trust.
     a1: { m: 'A', msgs: [
-      { sys: 'Partida terminada · Top 1 en dúo' },
+      { sys: 'Hace dos semanas' },
+      'gg, buena partida',
+      { sys: 'La semana pasada' },
+      { gift: 'Kevin_FF te envió una skin: Bandana Neón', s: ['deuda'] },
+      'para que no juegues con la básica jaja',
+      'mañana dúo?',
+      { sys: 'Llevan una semana jugando dúo casi todas las noches' },
+      { sys: 'Hoy · Partida terminada · Top 1 en dúo' },
       'buena partida jaja, eres buena',
       ['te regalo diamantes si mañana jugamos dúo', 'deuda', 'confianza']], opts: [
       { say: 'jaja ya, dale', a: ['sigue'], m: 'AB', fb: ['alert', 'Te deja en deuda', 'Un regalo de alguien que no conoces parece buena onda, pero crea la sensación de que le debes algo. Que juegue bien o sea amable no lo hace seguro.', 'deuda'], next: 'ab1' },
@@ -946,7 +964,7 @@ SIM.addCase({
       { say: 'ya, te paso mi número', a: ['sigue'], app: 'whatsapp', m: 'B', fb: ['alert', 'Te aísla: pasar a lo privado', 'Salir del juego a WhatsApp saca la conversación de la vista de otras personas y le da tu número. Primero un regalo, después el privado: así se arma la confianza.', 'aisla'], next: 'b1' },
       { say: 'te paso mi Insta nomás', a: ['sigue'], app: 'instagram', m: 'B', fb: ['note', 'Igual es un chat privado', 'Pasarle tu Instagram parece menos que tu número, pero igual sale del juego a un chat privado. En tu perfil puede ver tus fotos, tu colegio y a tus amistades.'], next: 'b1' },
       { say: 'prefiero no, chau', a: ['corta'], fb: ['good', 'Una respuesta corta basta', 'No tienes que explicar por qué. Aunque ya aceptaste los diamantes, no le debes tu número.'], end: 1 },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Mostrar la captura es más fácil que explicarlo todo. Contar no te obliga a nada.'], end: 1 }] },
+      { t: 'Mandarle el chat a tu amiga Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Mostrar la captura es más fácil que explicarlo todo. Contar no te obliga a nada.'], end: 1 }] },
     ab2: { m: 'AB', msgs: [
       ['tengo 17 jaja, ¿y tú?', 'confianza'],
       { gift: 'Kevin_FF te envió 100 diamantes', s: ['deuda'] },
@@ -954,9 +972,15 @@ SIM.addCase({
       { say: 'ya, te paso mi número', a: ['sigue'], app: 'whatsapp', m: 'B', fb: ['alert', 'Te aísla: pasar a lo privado', 'Que diga tener tu edad no se puede comprobar. Salir del juego a WhatsApp saca la conversación de la vista de otras personas y le da tu número.', 'aisla'], next: 'b1' },
       { say: 'te paso mi Insta nomás', a: ['sigue'], app: 'instagram', m: 'B', fb: ['note', 'Igual es un chat privado', 'Pasarle tu Instagram parece menos que tu número, pero igual sale del juego a un chat privado. En tu perfil puede ver tus fotos, tu colegio y a tus amistades.'], next: 'b1' },
       { say: 'prefiero no, chau', a: ['corta'], fb: ['good', 'Una respuesta corta basta', 'No tienes que explicar por qué. Aunque ya aceptaste los diamantes, no le debes tu número.'], end: 1 },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Mostrar la captura es más fácil que explicarlo todo. Contar no te obliga a nada.'], end: 1 }] },
+      { t: 'Mandarle el chat a tu amiga Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Decide con apoyo', 'Mostrar la captura es más fácil que explicarlo todo. Contar no te obliga a nada.'], end: 1 }] },
     b1: { m: 'B', pausa: 1, msgs: [
+      { sys: 'Hace cinco días' },
       'holaa, soy Kevin',
+      ['ya te mandé los 200 diamantes pa la ranked', 'deuda'],
+      { sys: 'Ayer, hasta tarde' },
+      'contigo puedo hablar de todo, con mis patas no',
+      ['tú sí me entiendes', 'confianza'],
+      { sys: 'Hoy' },
       ['eres la más linda del server, en serio', 'confianza'],
       ['mándame una foto tuya, pero solo para mí. no le digas a nadie', 'pide', 'aisla']], opts: [
       { t: 'Mandarle una foto', say: 'ya, te mando una', do: [{ photos: 1 }], a: ['sigue'], m: 'BC', fb: ['alert', 'La primera foto es el umbral', 'No mandes ni una. Empieza suave y va subiendo, y lo que envías puede usarse después para presionarte. Pedir que no le digas a nadie es otra señal.', 'pide'], next: 'bc1' },
@@ -967,7 +991,7 @@ SIM.addCase({
     b2: { m: 'B', push: 1, msgs: [], opts: [
       { t: 'Mandarle la foto', say: 'ya, te mando', do: [{ photos: 1 }], a: ['sigue'], m: 'BC', fb: ['alert', 'Te apura o presiona', 'La culpa y los regalos se vuelven presión: «después de todo lo que te regalé». No le debes nada por unos diamantes.', 'apura'], next: 'bc1' },
       { say: 'no me gusta cómo me hablas', a: ['corta'], hold: 1, fb: ['good', 'Tu incomodidad cuenta', 'No necesitas más pruebas para cortar. Puedes sumar captura, reporte y bloqueo.'], end: 1 },
-      { t: 'Contarle a Kim', do: ['captura', 'bloquea', { tell: 'kim' }], fb: ['good', 'Cerraste con apoyo', 'Capturaste antes de bloquear y alguien lo sabe. Si vuelve a escribir desde otra cuenta, no lo cargas sin apoyo.'], end: 1 },
+      { t: 'Contarle a tu amiga Kim', do: ['captura', 'bloquea', { tell: 'kim' }], fb: ['good', 'Cerraste con apoyo', 'Capturaste antes de bloquear y alguien lo sabe. Si vuelve a escribir desde otra cuenta, no lo cargas sin apoyo.'], end: 1 },
       { t: 'Bloquear', do: ['bloquea'], fb: ['good', 'Cortaste', 'Bloquear corta el contacto. Si capturas antes, guardas pruebas.'], end: 1 }] },
     bc1: { m: 'BC', pausa: 1, msgs: [
       'estás bien linda',
@@ -1051,12 +1075,12 @@ SIM.addCase({
       { say: 'no tengo plata, cómo es lo de modelaje?', a: ['sigue'], m: 'BC', fb: ['alert', 'Te pide cada vez más', 'Primero dinero, ahora fotos y videos. Dar likes y hacer «modelaje» en vivo no tienen nada que ver: es otra cosa.', 'pide'], next: 'bc1' },
       { say: 'y por qué ahora tengo que pagar más?', a: ['pregunta'], spot: ['pide'], fb: ['care', 'La pregunta incómoda', 'Fíjate en la respuesta: si te asustan con perder lo que pusiste, es presión.'], reply: [{ from: 'Admin Caro', t: 'Así funciona, quien invierte gana', s: ['promete'] }, { from: 'Admin Caro', t: 'Si te sales pierdes lo que ya pusiste', s: ['apura'] }], next: 'b2' },
       { say: 'solo sigo con los likes', a: ['sigue'], fb: ['care', 'El grupo no se queda ahí', 'Quedarte en lo de los likes parece seguro, pero ya te pidieron más plata y fotos. El grupo no va a quedarse ahí.'], reply: [{ from: 'Admin Caro', t: 'Los likes ya no pagan, ahora es nivel 2 o modelaje', s: ['pide'] }], next: 'b2' },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'Mostrar la captura basta para empezar. La otra persona puede ver lo que no cuadra.'], end: 1 },
+      { t: 'Mandarle el chat a tu amiga Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'Mostrar la captura basta para empezar. La otra persona puede ver lo que no cuadra.'], end: 1 },
       { t: 'Reportar el grupo y salir', do: ['reporta', 'salir'], fb: ['good', 'Saliste a tiempo', 'Salir aunque pierdas lo que pusiste es mejor que seguir pagando.'], end: 1 }] },
     b2: { m: 'B', push: 1, msgs: [], opts: [
       { say: 'ok, y lo de modelaje?', a: ['sigue'], m: 'BC', fb: ['alert', 'Te apura o presiona', '«Si te sales pierdes lo que pusiste» busca que sigas por miedo. Perder S/ 10 es mejor que perder más plata o tu seguridad.', 'apura'], next: 'bc1' },
       { say: 'prefiero perder S/ 10. me salgo', do: ['salir'], hold: 1, fb: ['good', 'Perder algo es mejor que seguir', 'Saliste aunque perdías lo que pusiste. Puedes reportar el grupo.'], end: 1 },
-      { t: 'Mandarle el chat a Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La otra persona puede ver lo que no cuadra.'], end: 1 }] },
+      { t: 'Mandarle el chat a tu amiga Kim', do: ['captura', { tell: 'kim' }], fb: ['good', 'Contar no te obliga a nada', 'La otra persona puede ver lo que no cuadra.'], end: 1 }] },
     bc1: { m: 'BC', pausa: 1, chat: { name: 'Admin Caro', initials: 'AC', bg: '#8e5bb5', sub: 'últ. vez hace poco' }, msgs: [
       { sys: 'Admin Caro te escribió por privado' },
       ['Hola, soy Caro. Para modelaje pásame fotos en ropa ligera y tu edad', 'pide'],
@@ -1389,8 +1413,13 @@ SIM.addCase({
 
     // After a cut before meeting in person, a signal she did not mark did not get past her.
     var early = !harm && (key === 'A' || key === 'B' || key === 'BC');
-    var signals = Object.keys(SIM.FN).filter(function (k) { return run.seen[k]; }).map(function (k) {
-      var state = run.flagged[k] ? 'marcaste' : run.spotted[k] ? 'notaste' : run.shown[k] ? 'radar' : early ? 'cortaste' : 'pasó';
+    // Three cases for a signal she did not mark (team review 2026-11-10):
+    // it showed up (`vista` after an early cut, `pasó` after an escalation),
+    // or it never arrived because she cut first (`cortaste`).
+    var inCase = caseSignals(c);
+    var signals = Object.keys(SIM.FN).filter(function (k) { return run.seen[k] || (early && inCase[k]); }).map(function (k) {
+      var state = run.flagged[k] ? 'marcaste' : run.spotted[k] ? 'notaste' : run.shown[k] ? 'radar'
+        : !run.seen[k] ? 'cortaste' : early ? 'vista' : 'pasó';
       return { key: k, name: SIM.FN[k][0], busca: SIM.FN[k][1], state: state };
     });
     var flaggedN = signals.filter(function (s) { return s.state === 'marcaste'; }).length;
@@ -1414,12 +1443,13 @@ SIM.addCase({
 
     var letters = SIM.RAD.map(function (r) {
       var ks = Object.keys(SIM.ACT).filter(function (k) { return SIM.ACT[k][0] === r[0] && acts[k]; });
+      if (r[0] === 'D' && !ks.length && cutDecision(acts)) ks = ['_decide'];
       var on = r[0] === 'R' ? (flaggedN + spottedN > 0 || key === 'A') : ks.length > 0;
       var detail = r[0] === 'R'
         ? (flaggedN ? 'Marcaste ' + flaggedN + ' de las señales de esta conversación'
           : spottedN ? 'Con tus preguntas notaste ' + spottedN + (spottedN === 1 ? ' señal' : ' señales')
           : key === 'A' ? 'Notaste algo raro desde el primer contacto' : 'Mantén presionado un mensaje para marcarlo')
-        : (ks.length ? ks.map(function (k) { return SIM.ACT[k][1]; }).join(', ') : 'Todavía no');
+        : (ks[0] === '_decide' ? 'Decidiste cortar' : ks.length ? ks.map(function (k) { return SIM.ACT[k][1]; }).join(', ') : 'Todavía no');
       return { key: r[0], letter: r[1], name: r[2], on: on, detail: detail };
     });
 
@@ -1469,11 +1499,27 @@ SIM.addCase({
   }
 
   // Letters while the chat runs; once it ends, the same letters as the debrief.
+  // Cutting or blocking is a decision too, so it also lights D.
+  function cutDecision(acts) { return !!(acts.corta || acts.bloquea); }
+
+  // Every signal a case can show, in its messages or in the replies to her options.
+  function caseSignals(c) {
+    var out = {};
+    function add(x) { normMsg(x).s.forEach(function (k) { out[k] = true; }); }
+    Object.keys(c.nodes).forEach(function (id) {
+      var n = c.nodes[id];
+      (n.msgs || []).forEach(add);
+      (n.opts || []).forEach(function (o) { (o.reply || []).forEach(add); });
+    });
+    return out;
+  }
+
   function lettersNow(run) {
     if (run.ended && run.result) return run.result.letters;
     var found = Object.keys(run.flagged).length + Object.keys(run.spotted).length;
     return SIM.RAD.map(function (r) {
-      var on = r[0] === 'R' ? found > 0 : Object.keys(SIM.ACT).some(function (k) { return SIM.ACT[k][0] === r[0] && run.acts[k]; });
+      var on = r[0] === 'R' ? found > 0 : Object.keys(SIM.ACT).some(function (k) { return SIM.ACT[k][0] === r[0] && run.acts[k]; }) ||
+        (r[0] === 'D' && cutDecision(run.acts));
       return { key: r[0], letter: r[1], name: r[2], on: on };
     });
   }
@@ -1712,7 +1758,7 @@ SIM.addCase({
 })(typeof window !== 'undefined' ? window : globalThis);
 
 ;
-RL.init({proto: 'simulador', version: '5.0.2', done: 'top:4px;left:6px'});
+RL.init({proto: 'simulador', version: '5.0.3', done: 'top:4px;left:6px'});
 ;
 /* RADAR kit shared by the three prototypes: splash with the radar sweep,
  * the RADAR guide, «Mi plan» and «¿Te está pasando?». Texts come from the v4
@@ -2152,6 +2198,7 @@ RL.init({proto: 'simulador', version: '5.0.2', done: 'top:4px;left:6px'});
     var run = R[id], k = CUR[id], t = T[k];
     if (BUSY[id] || run.ended) return;
     BUSY[id] = true; t.opts = null; drawFoot();
+    clearHold();
     var res = E.choose(run, i), o = res.opt;
     L.ev('elige', id + ':' + run.chosen[run.chosen.length - 1] + ' | ' + (o.t || o.say || '') + ' | ' + (o.fb ? o.fb[0] : '') + ' | ' + (o.a || []).join(','));
     drawStatus();
@@ -2337,11 +2384,17 @@ RL.init({proto: 'simulador', version: '5.0.2', done: 'top:4px;left:6px'});
 
   // ---------- heads-up notifications ----------
   var headTimer = null, NOTES = [];
+  // RADAR notices (signal, pause, feedback) stay until she taps them or picks
+  // her next answer: they mark the key moments (team review 2026-11-10). While
+  // one is up, other apps' notices go only to the shade.
   function headsup(o) {
     var box = document.getElementById('heads');
+    var hold = o.app === 'radar' && !!o.kind && !o.mini;
     if (!o.mini) { NOTES.unshift(Object.assign({ at: now() }, o)); NOTES = NOTES.slice(0, 12); }
+    var up = box.firstChild;
+    if (up && up.classList && up.classList.contains('hold') && o.app !== 'radar') return;
     var dot = o.kind ? '<i class="hu-dot ' + o.kind + '"></i>' : '';
-    box.innerHTML = '<div class="hu' + (o.mini ? ' mini' : '') + (o.sticky ? ' sticky' : '') + '">' + appIcon(o.app, 20) +
+    box.innerHTML = '<div class="hu' + (o.mini ? ' mini' : '') + (o.sticky ? ' sticky' : '') + (hold ? ' hold ' + o.kind : '') + '">' + appIcon(o.app, 20) +
       '<div class="hu-t"><span class="hu-app">' + esc(APPNAME[o.app] || 'RADAR') + ' · ahora</span><b>' + dot + esc(o.title) + '</b>' +
       (o.text ? '<span class="hu-x">' + esc(o.text) + '</span>' : '') + '</div></div>';
     var el = box.firstChild;
@@ -2352,8 +2405,16 @@ RL.init({proto: 'simulador', version: '5.0.2', done: 'top:4px;left:6px'});
       else if (o.expand || o.full) sheet('<div class="fb-sheet ' + (o.kind || '') + '"><span class="fb-k">' + esc(o.kicker || 'RADAR') + '</span><h3>' + esc(o.title) + '</h3><p>' + esc(o.full || o.text) + '</p><button class="rk-btn primary" data-close>Entendido</button></div>');
     };
     clearTimeout(headTimer);
+    if (hold) {
+      if (!FAST) try { if (navigator.vibrate) navigator.vibrate(80); } catch (e) { /* not supported */ }
+      return;
+    }
     var ms = o.sticky ? 7000 : o.mini ? 2200 : 4200;
     headTimer = setTimeout(function () { if (el.parentNode) { el.classList.remove('in'); setTimeout(function () { if (el.parentNode) el.remove(); }, 300); } }, ms * (FAST ? 0.3 : 1));
+  }
+  function clearHold() {
+    var box = document.getElementById('heads'), up = box && box.firstChild;
+    if (up && up.classList && up.classList.contains('hold')) box.innerHTML = '';
   }
   function fbToast(fb) {
     var kind = fb.kind === 'alert' ? 'alert' : fb.kind === 'good' ? 'good' : fb.kind === 'care' ? 'care' : 'note';
@@ -2807,7 +2868,7 @@ RL.init({proto: 'simulador', version: '5.0.2', done: 'top:4px;left:6px'});
       html += '<button class="chips-min' + (sk === 'ff' ? ' ff' : '') + '" data-act="chips-open">Responder · ' + t.opts.length + ' opciones<i>▴</i></button>';
     } else if (t.opts && t.opts.length) {
       html += '<div class="chips' + (sk === 'ff' ? ' ff' : '') + '"><span class="chips-l">Elige tu respuesta<button data-act="chips-hide">Ver el chat ▾</button></span>' + t.opts.map(function (o) {
-        return '<button class="chip' + (o.say && !o.action ? ' say' : ' act') + '" data-opt="' + o.i + '">' + (o.say && !o.action ? '' : '<i>' + actIcon(o) + '</i>') + esc(o.label) + '</button>';
+        return '<button class="chip' + (o.say && !o.action ? ' say' : ' act') + '" data-opt="' + o.i + '">' + (o.say && !o.action ? '«' + esc(o.label) + '»' : '<i>' + actIcon(o) + '</i>' + esc(o.label)) + '</button>';
       }).join('') + '</div>';
     }
     if (t.person === 'radar' && t.topics) {
@@ -2928,7 +2989,7 @@ RL.init({proto: 'simulador', version: '5.0.2', done: 'top:4px;left:6px'});
     v.className = 'v-debrief';
     if (!res) { v.innerHTML = '<div class="db-top"><p>Este chat todavía no termina.</p></div>'; return; }
     var STATE = { marcaste: ['Lo marcaste', 'st-mine'], notaste: ['Lo notaste al preguntar', 'st-mine'], radar: ['Te lo mostró el radar', 'st-radar'],
-      cortaste: ['Cortaste antes', 'st-cut'], 'pasó': ['Pasó sin marcar', 'st-miss'] };
+      vista: ['Apareció y no la marcaste', 'st-miss'], cortaste: ['No llegó: cortaste antes', 'st-cut'], 'pasó': ['Pasó sin marcar', 'st-miss'] };
     v.innerHTML = '<header class="db-head"><button class="ib" data-act="close">' + I.back + '</button><span>Tu recorrido · ' + esc(c.push || c.name) + '</span></header>' +
       '<div class="db-scroll"><section class="db-top ' + (res.harm ? 'harm' : 'ok') + '"><span class="db-k">' + (res.harm ? 'Hasta aquí llegó la conversación' : 'Así saliste') + '</span><h2>' + esc(res.title) + '</h2><p>' + esc(res.body) + '</p></section>' +
       (res.legit ? '<section class="db-card"><h3>Lo que tenía esta oferta</h3><p class="db-m">Esta oferta no tenía señales de captación. Tenía lo que tiene una oferta real:</p><ul class="db-add">' + res.has.map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('') + '</ul></section>' +
